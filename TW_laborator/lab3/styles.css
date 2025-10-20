@@ -1,0 +1,57 @@
+header{
+    background-color:cadetblue;
+}
+
+main{
+    padding: 10px;
+    border: solid 3px;
+    color: black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    line-height: normal;
+    word-spacing: 3px;
+}
+
+footer{
+    margin-top: 30px;
+    height: 200px;
+    width: absolute;
+    border: solid 7px;
+}
+
+a{
+    color: chartreuse;
+    font-size: larger;
+    text-shadow: 2px;
+}
+
+nav > a{
+    color:  cornflowerblue;
+    text-decoration: none;
+    word-spacing: 10px;
+    letter-spacing: 5px;
+}
+
+#titlu{
+    color:darkblue;
+    text-decoration: underline;
+    text-decoration-color:black;
+}
+
+h1, h2, h3, h4, h5, h6{
+    color: darkgreen;
+}
+
+ol{
+    word-spacing: 2ch;
+    background-color: crimson;
+    color:darkseagreen;
+}
+
+iframe{
+    padding: 20px;
+    margin-left: 100px;
+}
+
+a[href="#games"]{
+    color: hotpink !important;
+}
