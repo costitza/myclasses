@@ -27,19 +27,18 @@ a completa regulile CSS de mai jos.
   transition: 2s;  
 }
 
-/*?{
+.container div:hover{
   transition: 0s;
   background: #fff00f;
-  animation: ? ? ? ?;
+  animation: animatiles 4s linear infinite;
 }
-*/
 
 @keyframes animatiles{
   0%{
       filter: hue-rotate(0deg);
   }
   100%{
-        ?
+        filter: hue-rotate(90deg);
   }
 }
 
