@@ -17,14 +17,14 @@ def is_valid(s):
 
     if (not s[0].isalpha()) or (not s[1].isalpha()):
         return False
-    
+
     for ch in s:
         if ch.isdigit():
             if ch == "0":
                 return False
             else:
                 break
-    
+
     reversed = s[::-1]
     if reversed[0].isdigit():
         i = 0
@@ -37,7 +37,7 @@ def is_valid(s):
         for index in range(0, len(reversed)):
             if reversed[index].isdigit():
                 return False
-    
+
     return True
 
 
