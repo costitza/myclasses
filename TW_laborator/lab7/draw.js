@@ -45,7 +45,7 @@ function rainbow(target) {
       var table = document.getElementById("drawtable");
       let numberOfRows = table.rows.length;
       for (let r = 0; r < table.rows.length; r++) {
-         let color = colors[Math.round(numberOfColors / numberOfRows * r) % numberOfColors];
+         let color = colors[Math.round(numberOfColors / numberOfRows * (r - 1)) % numberOfColors];
          for (let c = 0; c < table.rows[r].cells.length; c++) {
             let cell = table.rows[r].cells[c];
             cell.style.backgroundColor = color;
@@ -55,7 +55,7 @@ function rainbow(target) {
       var table = document.getElementById("drawtable");
       let numberOfCols = table.rows[0].cells.length;
       for (let c = 0; c < table.rows[0].cells.length; c++) {
-         let color = colors[Math.round(numberOfColors / numberOfCols * c) % numberOfColors];
+         let color = colors[Math.round((numberOfColors / numberOfCols) * (c - 1)) % numberOfColors];
          for (let r = 0; r < table.rows.length; r++) {
             let cell = table.rows[r].cells[c];
             cell.style.backgroundColor = color;
@@ -177,7 +177,7 @@ function drawPixelAmount(row, col, color, amount) {
    metoda getComputedStyle(element). Accesând proprietatea backgroundColor 
    a obiectului întors, veți obține un string de forma 'rgb(x,y,z)'.
    */
-   const table = document.getElementById("myTable");
+   const table = document.getElementById("drawtable");
    const cell = table.rows[row].cells[col];
 
    if (amount === 1) {
@@ -197,7 +197,7 @@ function drawPixelAmount(row, col, color, amount) {
    let g = colorMixer(oldRGB[1], newRGB[1], amount);
    let b = colorMixer(oldRGB[2], newRGB[2], amount);
 
-   cell.style.backgroundColor = rgb(`${r},${g},${b}`);
+   cell.style.backgroundColor = `rgb(${r},${g},${b})`;
 }
 
 function delRow(row) {
@@ -223,7 +223,7 @@ function shiftRow(row, pos) {
    11. Aplicați o permutare circulară la dreapta cu 'pos' poziții a
    elementelor de pe linia cu numărul 'row' din tabla de desenat. 
 */
-   const table = document.getElementById("myTable");
+   const table = document.getElementById("drawtable");
    const cells = [...table.rows[row].cells];
    const n = cells.length;
    pos = pos % n;
@@ -236,7 +236,7 @@ function jumble() {
    12. Folosiți funcția 'shiftRow' pentru a aplica o permutare circulară
    cu un număr aleator de poziții fiecărei linii din tabla de desenat.
 */
-   const table = document.getElementById("myTable");
+   const table = document.getElementById("drawtable");
    const nrows = table.rows.length;
    for (let r = 0; r < nrows; r++) {
       const ncols = table.rows[r].cells.length;
@@ -275,12 +275,16 @@ function smear(row, col, amount) {
 
 
 window.onload = function(){
-    const rows = 30;
-    const cols = 30;	
+    const rows = 40;
+    const cols = 40;	
 
     drawTable(rows, cols);
     rainbow("vertical");
-
+   drawLine(5, 5, 5, 30, "black");
+   drawRect(10, 10, 20, 20, "blue");
+   //jumble();
+   drawPixelAmount(1, 1, "rgb(0,0,255)", 0.8);
+   jumble();
 }
 
 
