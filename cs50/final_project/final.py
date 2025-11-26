@@ -13,10 +13,11 @@ def user_prompt():
 Please choose an option:
 
 1. Add a new movie (by iMDB id)
-2. Update the rating of an existing movie
-3. Delete a movie
-4. Export movie library to PDF
-5. Exit
+2. Update the rating of an existing movie (search by title or id)
+3. Delete a movie (by id)
+4. List movies from genre
+5. Export movie library to PDF
+6. Exit
 
     """
 
@@ -89,6 +90,9 @@ def export_to_pdf():
 
 
 def menu_1():
+    '''
+    Add a movie using the IMDb ID
+    '''
     pattern = r"^tt\d{7}$"
     str = input("Add movie by IMDb id: ")
 
@@ -96,11 +100,25 @@ def menu_1():
         print("Invalid IMDb ID format. Example: tt0133093")
         return
     
+    movies = load_from_json()
+    titles = [movie["title"] for movie in movies]
     movie = search_movie(str)
 
     if movie is None:
         print("Movie not found.")
         return
+    if movie["title"] in titles:
+        print("Movie is already in the library.")
+        return
+
+    rate = input("Give it a rating: ")
+
+    if int(rate) and 0 <= int(rate) <= 10:
+        movie["rating"] = rate
+    else:
+        movie["rating"] = "N/A"
+
+    movie["id"] = str
     
     add_movie(movie)
     print("Movie added succesfully!")
@@ -109,17 +127,63 @@ def menu_1():
 
 
 def menu_2():
-    ...
+    '''
+    Update the rating on a movie
+    '''
+    key = input("Movie you want to update the rating on (title or id): ")
+
+    movies = load_from_json()
+    idx = next(
+        (i for i, m in enumerate(movies)
+         if m.get("title", "").lower() == key.lower()
+         or m.get("id", "").lower() == key.lower()),
+        None
+    )
+    
+    if idx is None:
+        print("Movie not found.")
+        return
+
+    rate = input("Give it a rating: ")
+
+    if int(rate) and 0 <= int(rate) <= 10:
+        movies[idx]["rating"] = rate
+    else:
+        print("Invalid rating (0-10)")
+        return
+
+    save_to_json(movies)
+    print("Rating saved succesfully!")
+
 
 
 
 def menu_3():
-    ...
+    '''
+    Delete movie from library
+    '''
+    key = input("Movie you want to delete (title): ")
+    movies = load_from_json()
+    titles = [movie["title"] for movie in movies]
+
+    if key not in titles:
+        print("Movie not found")
+        return
+
+    delete_movie(key)
+    print("Movie removed succesfully!")
+
 
 
 
 def menu_4():
     ...
+
+
+
+def menu_5():
+    ...
+
 
 
 def exit_function():
@@ -139,7 +203,7 @@ def main():
     try:
         while True:
             print(user_prompt())
-            client = input("Enter choice (1-5): ")
+            client = input("Enter choice (1-6): ")
             match client:
                 case "1":
                     menu_1()
@@ -150,6 +214,8 @@ def main():
                 case "4":
                     menu_4()
                 case "5":
+                    menu_5()
+                case "6":
                     exit_function()
                 case _:
                     print("Invalid request.")
