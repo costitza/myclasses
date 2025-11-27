@@ -9,5 +9,126 @@
         "plot": "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
         "rating": "8",
         "id": "tt0816692"
+    },
+    {
+        "title": "Terrifier",
+        "year": "2016",
+        "genre": "Horror",
+        "runtime": "85 min",
+        "director": "Damien Leone",
+        "actors": "Jenna Kanell, Samantha Scaffidi, David Howard Thornton",
+        "plot": "A maniac named Art the Clown terrorizes two friends on Halloween and everyone who gets in his way.",
+        "rating": "8",
+        "id": "tt4281724"
+    },
+    {
+        "title": "The Godfather",
+        "year": "1972",
+        "genre": "Crime, Drama",
+        "runtime": "175 min",
+        "director": "Francis Ford Coppola",
+        "actors": "Marlon Brando, Al Pacino, James Caan",
+        "plot": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+        "rating": "9",
+        "id": "tt0068646"
+    },
+    {
+        "title": "The Lord of the Rings: The Return of the King",
+        "year": "2003",
+        "genre": "Adventure, Drama, Fantasy",
+        "runtime": "201 min",
+        "director": "Peter Jackson",
+        "actors": "Elijah Wood, Viggo Mortensen, Ian McKellen",
+        "plot": "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
+        "rating": "10",
+        "id": "tt0167260"
+    },
+    {
+        "title": "Fight Club",
+        "year": "1999",
+        "genre": "Crime, Drama, Thriller",
+        "runtime": "139 min",
+        "director": "David Fincher",
+        "actors": "Edward Norton, Brad Pitt, Meat Loaf",
+        "plot": "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.",
+        "rating": "10",
+        "id": "tt0137523"
+    },
+    {
+        "title": "Star Wars: Episode V - The Empire Strikes Back",
+        "year": "1980",
+        "genre": "Action, Adventure, Fantasy",
+        "runtime": "124 min",
+        "director": "Irvin Kershner",
+        "actors": "Mark Hamill, Harrison Ford, Carrie Fisher",
+        "plot": "After the Empire overpowers the Rebel Alliance, Luke Skywalker begins training with Jedi Master Yoda, while Darth Vader and bounty hunter Boba Fett pursue his friends across the galaxy.",
+        "rating": "7",
+        "id": "tt0080684"
+    },
+    {
+        "title": "The Matrix",
+        "year": "1999",
+        "genre": "Action, Sci-Fi",
+        "runtime": "136 min",
+        "director": "Lana Wachowski, Lilly Wachowski",
+        "actors": "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss",
+        "plot": "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.",
+        "rating": "9",
+        "id": "tt0133093"
+    },
+    {
+        "title": "Terminator 2: Judgment Day",
+        "year": "1991",
+        "genre": "Action, Adventure, Sci-Fi",
+        "runtime": "137 min",
+        "director": "James Cameron",
+        "actors": "Arnold Schwarzenegger, Linda Hamilton, Edward Furlong",
+        "plot": "A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her ten year old son John from an even more advanced and powerful cyborg.",
+        "rating": "8",
+        "id": "tt0103064"
+    },
+    {
+        "title": "Whiplash",
+        "year": "2014",
+        "genre": "Drama, Music",
+        "runtime": "106 min",
+        "director": "Damien Chazelle",
+        "actors": "Miles Teller, J.K. Simmons, Melissa Benoist",
+        "plot": "A promising young drummer enrolls at a cut-throat music conservatory where his dreams of greatness are mentored by an instructor who will stop at nothing to realize a student's potential.",
+        "rating": "9",
+        "id": "tt2582802"
+    },
+    {
+        "title": "Spider-Man: Into the Spider-Verse",
+        "year": "2018",
+        "genre": "Animation, Action, Adventure",
+        "runtime": "117 min",
+        "director": "Bob Persichetti, Peter Ramsey, Rodney Rothman",
+        "actors": "Shameik Moore, Jake Johnson, Hailee Steinfeld",
+        "plot": "Teen Miles Morales becomes the Spider-Man of his universe and must join with five spider-powered individuals from other dimensions to stop a threat for all realities.",
+        "rating": "6",
+        "id": "tt4633694"
+    },
+    {
+        "title": "Avengers: Endgame",
+        "year": "2019",
+        "genre": "Action, Adventure, Sci-Fi",
+        "runtime": "181 min",
+        "director": "Anthony Russo, Joe Russo",
+        "actors": "Robert Downey Jr., Chris Evans, Mark Ruffalo",
+        "plot": "After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.",
+        "rating": "8",
+        "id": "tt4154796"
+    },
+    {
+        "title": "Joker",
+        "year": "2019",
+        "genre": "Crime, Drama, Thriller",
+        "runtime": "122 min",
+        "director": "Todd Phillips",
+        "actors": "Joaquin Phoenix, Robert De Niro, Zazie Beetz",
+        "plot": "Arthur Fleck, a party clown and a failed stand-up comedian, leads an impoverished life with his ailing mother. However, when society shuns him and brands him as a freak, he decides to embrace the life of chaos in Gotham City.",
+        "rating": "10",
+        "id": "tt7286456"
     }
 ]
