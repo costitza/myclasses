@@ -18,7 +18,8 @@ Please choose an option:
 3. Delete a movie (by id)
 4. Save movies from specific genre to PDF
 5. Show average rating of library
-6. Exit
+6. Save top 10 movies to PDF
+7. Exit
 
     """
 
@@ -33,6 +34,32 @@ def load_api_key(config_path="config.json"):
         raise FileNotFoundError("Missing config.json file with API key.")
     except KeyError:
         raise KeyError("API_KEY not found in config.json")
+    
+
+
+def sanitize_text(s: str) -> str:
+    """
+    Make text safe for core PDF fonts (latin-1).
+    """
+    if s is None:
+        return ""
+    # common replacements that break with core fonts
+    replacements = {
+        "•": "|",
+        "–": "-",   # en dash
+        "—": "-",   # em dash
+        "“": '"',
+        "”": '"',
+        "‘": "'",
+        "’": "'",
+        "…": "...",
+        "\u00A0": " ",  # non-breaking space
+    }
+    for bad, good in replacements.items():
+        s = s.replace(bad, good)
+    # Optional: strip other non-latin-1 chars conservatively
+    return s.encode("latin-1", "ignore").decode("latin-1")
+
 
 
 
@@ -85,14 +112,8 @@ def delete_movie(title, path="movies.json"):
 
 
 def export_to_pdf(movies=None, db_path="movies.json", output="movies.pdf"):
-    """
-    Export a list of movies to PDF.
-    - If `movies` is None, loads all movies from `db_path`.
-    - Otherwise expects `movies` to be a list of movie dicts.
-    """
     if movies is None:
         movies = load_from_json(db_path)
-
     if not movies:
         print("No movies to export. PDF not created.")
         return
@@ -100,50 +121,79 @@ def export_to_pdf(movies=None, db_path="movies.json", output="movies.pdf"):
     pdf = FPDF(orientation="P", unit="mm", format="A4")
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
-    pdf.set_title("My Movie Library")
     pdf.set_author("Movie Manager")
+    pdf.set_title("My Movie Library")
 
+    # Header
     pdf.set_font("Helvetica", "B", 22)
-    pdf.cell(0, 12, "My Movie Library", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
-    pdf.ln(4)
+    pdf.set_text_color(0, 0, 0)
+    pdf.set_xy(0, 10)
+    pdf.cell(0, 10, "My Movie Library", align="C",
+             new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    pdf.ln(3)
 
-    movies = sorted(movies, key=lambda m: m.get("title", "").lower())
+    LEFT = 12
+    pdf.set_font("Helvetica", size=11)
 
     for m in movies:
-        title = m.get("title", "N/A")
-        year = m.get("year", "N/A")
-        imdb_id = m.get("id", "N/A")
-        genre = m.get("genre", "N/A")
-        runtime = m.get("runtime", "N/A")
-        director = m.get("director", "N/A")
-        actors = m.get("actors", "N/A")
-        plot = m.get("plot", "")
-        rating = m.get("rating", "N/A")
+        title    = sanitize_text(m.get("title", "Untitled"))
+        year     = sanitize_text(m.get("year", "N/A"))
+        imdb_id  = sanitize_text(m.get("id", "N/A"))
+        genre    = sanitize_text(m.get("genre", "N/A"))
+        runtime  = sanitize_text(m.get("runtime", "N/A"))
+        director = sanitize_text(m.get("director", "N/A"))
+        actors   = sanitize_text(m.get("actors", "N/A"))
+        plot     = sanitize_text(m.get("plot", ""))
+        rating   = m.get("rating", "N/A")
 
+        # Title row
         pdf.set_font("Helvetica", "B", 14)
-        pdf.cell(0, 8, f"{title} ({year})", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        pdf.set_x(LEFT)
+        pdf.cell(0, 8, f"{title} ({year})",
+                 new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
-        pdf.set_font("Helvetica", size=11)
-        pdf.cell(0, 6, f"IMDb ID: {imdb_id}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
-        pdf.cell(0, 6, f"Genre: {genre}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
-        pdf.cell(0, 6, f"Runtime: {runtime}   |   Director: {director}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
-        pdf.cell(0, 6, f"Actors: {actors}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
-        if rating not in (None, "", "N/A"):
-            pdf.cell(0, 6, f"Your rating: {rating}/10", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        # ASCII-only meta (use | instead of •)
+        pdf.set_font("Helvetica", "", 11)
+        pdf.set_x(LEFT)
+        meta = f"IMDb: {imdb_id} | {runtime} | Director: {director}"
+        pdf.cell(0, 6, meta, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+
+        # Actors
+        pdf.set_x(LEFT)
+        pdf.multi_cell(0, 6, f"Actors: {actors}")
+
+        # Plot
         if plot:
+            pdf.ln(1)
+            pdf.set_x(LEFT)
             pdf.multi_cell(0, 6, f"Plot: {plot}")
 
-        pdf.ln(3)
+        # Rating
+        if isinstance(rating, (int, float)) or (isinstance(rating, str) and rating.isdigit()):
+            r = int(rating)
+            r = max(0, min(r, 10))
+            pdf.ln(1)
+            pdf.set_x(LEFT)
+            pdf.set_font("Helvetica", "B", 10)
+            pdf.cell(0, 6, f"Your rating: {r}/10",
+                     new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        elif rating not in (None, "", "N/A"):
+            pdf.ln(1)
+            pdf.set_x(LEFT)
+            pdf.set_font("Helvetica", "B", 10)
+            pdf.cell(0, 6, f"Your rating: {sanitize_text(str(rating))}",
+                     new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+
+        # separator
+        pdf.ln(2)
         y = pdf.get_y()
-        pdf.set_draw_color(200, 200, 200)
+        pdf.set_draw_color(220, 220, 220)
         pdf.line(10, y, 200, y)
         pdf.set_draw_color(0, 0, 0)
         pdf.ln(4)
 
     pdf.output(output)
     print(f"PDF exported to {output}")
-
-
 
 
 
@@ -251,7 +301,21 @@ def menu_4():
 
 
 def menu_5():
-    ...
+    movies = load_from_json()
+    rating_sum = sum([int(movie["rating"]) for movie in movies])
+
+    counter = sum([1 for _ in movies])
+
+    print(f"The average movie rating is {rating_sum / counter}")
+
+
+
+def menu_6():
+    movies = load_from_json()
+
+    top_movies = sorted(movies, key=lambda movie: (-int(movie["rating"]), movie["title"].lower()))[:5]
+
+    export_to_pdf(top_movies, output="top_movies.pdf")
 
 
 
@@ -285,6 +349,8 @@ def main():
                 case "5":
                     menu_5()
                 case "6":
+                    menu_6()
+                case "7":
                     exit_function()
                 case _:
                     print("Invalid request.")
