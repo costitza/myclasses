@@ -15,7 +15,7 @@ Please choose an option:
 
 1. Add a new movie (by iMDB id)
 2. Update the rating of an existing movie (search by title or id)
-3. Delete a movie (by id)
+3. Delete a movie (by title)
 4. Save movies from specific genre to PDF
 5. Show average rating of library
 6. Save top 10 movies to PDF
@@ -111,7 +111,7 @@ def delete_movie(title, path="movies.json"):
 
 
 
-def export_to_pdf(movies=None, db_path="movies.json", output="movies.pdf"):
+def export_to_pdf(movies=None, db_path="movies.json", output="movies.pdf", pdf_title="My Movie Library"):
     if movies is None:
         movies = load_from_json(db_path)
     if not movies:
@@ -122,13 +122,13 @@ def export_to_pdf(movies=None, db_path="movies.json", output="movies.pdf"):
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
     pdf.set_author("Movie Manager")
-    pdf.set_title("My Movie Library")
+    pdf.set_title(pdf_title)
 
     # Header
     pdf.set_font("Helvetica", "B", 22)
     pdf.set_text_color(0, 0, 0)
     pdf.set_xy(0, 10)
-    pdf.cell(0, 10, "My Movie Library", align="C",
+    pdf.cell(0, 10, pdf_title, align="C",
              new_x=XPos.LMARGIN, new_y=YPos.NEXT)
     pdf.ln(3)
 
@@ -152,11 +152,15 @@ def export_to_pdf(movies=None, db_path="movies.json", output="movies.pdf"):
         pdf.cell(0, 8, f"{title} ({year})",
                  new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
-        # ASCII-only meta (use | instead of •)
+        # Meta row
         pdf.set_font("Helvetica", "", 11)
         pdf.set_x(LEFT)
         meta = f"IMDb: {imdb_id} | {runtime} | Director: {director}"
         pdf.cell(0, 6, meta, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+
+        # 🔹 Genre row (added)
+        pdf.set_x(LEFT)
+        pdf.cell(0, 6, f"Genre: {genre}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
         # Actors
         pdf.set_x(LEFT)
@@ -197,11 +201,12 @@ def export_to_pdf(movies=None, db_path="movies.json", output="movies.pdf"):
 
 
 
+
 def menu_1():
     '''
     Add a movie using the IMDb ID
     '''
-    pattern = r"^tt\d{7}$"
+    pattern = r"^tt\d{7}\d*$"
     str = input("Add movie by IMDb id: ")
 
     if re.match(pattern, str, flags=re.IGNORECASE) is None:
@@ -295,7 +300,7 @@ def menu_4():
         if key in genres:
             movies_genres.append(movie)
 
-    export_to_pdf(movies_genres, output=f"genre_{key}.pdf")
+    export_to_pdf(movies_genres, output=f"genre_{key}.pdf", pdf_title=f"Movie genre: {key.higher()}")
     print("Exported genre succesfully!")
 
 
@@ -306,7 +311,7 @@ def menu_5():
 
     counter = sum([1 for _ in movies])
 
-    print(f"The average movie rating is {rating_sum / counter}")
+    print(f"The average movie rating is {round(rating_sum / counter, 2)}")
 
 
 
@@ -315,7 +320,7 @@ def menu_6():
 
     top_movies = sorted(movies, key=lambda movie: (-int(movie["rating"]), movie["title"].lower()))[:5]
 
-    export_to_pdf(top_movies, output="top_movies.pdf")
+    export_to_pdf(top_movies, output="top_movies.pdf", pdf_title="My top 5 movies")
 
 
 
