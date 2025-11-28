@@ -3,6 +3,7 @@ from fpdf import FPDF
 import sys
 import json
 import re
+from fpdf.enums import XPos, YPos
 
 
 
@@ -15,8 +16,8 @@ Please choose an option:
 1. Add a new movie (by iMDB id)
 2. Update the rating of an existing movie (search by title or id)
 3. Delete a movie (by id)
-4. List movies from genre
-5. Export movie library to PDF
+4. Save movies from specific genre to PDF
+5. Show average rating of library
 6. Exit
 
     """
@@ -83,8 +84,65 @@ def delete_movie(title, path="movies.json"):
 
 
 
-def export_to_pdf():
-    ...
+def export_to_pdf(movies=None, db_path="movies.json", output="movies.pdf"):
+    """
+    Export a list of movies to PDF.
+    - If `movies` is None, loads all movies from `db_path`.
+    - Otherwise expects `movies` to be a list of movie dicts.
+    """
+    if movies is None:
+        movies = load_from_json(db_path)
+
+    if not movies:
+        print("No movies to export. PDF not created.")
+        return
+
+    pdf = FPDF(orientation="P", unit="mm", format="A4")
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+    pdf.set_title("My Movie Library")
+    pdf.set_author("Movie Manager")
+
+    pdf.set_font("Helvetica", "B", 22)
+    pdf.cell(0, 12, "My Movie Library", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
+    pdf.ln(4)
+
+    movies = sorted(movies, key=lambda m: m.get("title", "").lower())
+
+    for m in movies:
+        title = m.get("title", "N/A")
+        year = m.get("year", "N/A")
+        imdb_id = m.get("id", "N/A")
+        genre = m.get("genre", "N/A")
+        runtime = m.get("runtime", "N/A")
+        director = m.get("director", "N/A")
+        actors = m.get("actors", "N/A")
+        plot = m.get("plot", "")
+        rating = m.get("rating", "N/A")
+
+        pdf.set_font("Helvetica", "B", 14)
+        pdf.cell(0, 8, f"{title} ({year})", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+
+        pdf.set_font("Helvetica", size=11)
+        pdf.cell(0, 6, f"IMDb ID: {imdb_id}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        pdf.cell(0, 6, f"Genre: {genre}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        pdf.cell(0, 6, f"Runtime: {runtime}   |   Director: {director}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        pdf.cell(0, 6, f"Actors: {actors}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        if rating not in (None, "", "N/A"):
+            pdf.cell(0, 6, f"Your rating: {rating}/10", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        if plot:
+            pdf.multi_cell(0, 6, f"Plot: {plot}")
+
+        pdf.ln(3)
+        y = pdf.get_y()
+        pdf.set_draw_color(200, 200, 200)
+        pdf.line(10, y, 200, y)
+        pdf.set_draw_color(0, 0, 0)
+        pdf.ln(4)
+
+    pdf.output(output)
+    print(f"PDF exported to {output}")
+
 
 
 
@@ -177,7 +235,18 @@ def menu_3():
 
 
 def menu_4():
-    ...
+    key = input("Genre you want to filter on: ").strip().lower()
+    movies = load_from_json()
+
+    movies_genres = []
+    for movie in movies:
+        genres = movie["genre"].split(", ")
+        genres = [elem.lower() for elem in genres]
+        if key in genres:
+            movies_genres.append(movie)
+
+    export_to_pdf(movies_genres, output=f"genre_{key}.pdf")
+    print("Exported genre succesfully!")
 
 
 
