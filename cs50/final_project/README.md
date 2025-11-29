@@ -1,5 +1,5 @@
 # Movie Manager (CS50P Final Project)
-#### Video Demo: <PUT YOUR YOUTUBE URL HERE>
+#### Video Demo: <https://www.youtube.com/watch?v=FAQOSo72nW4>
 #### Description:
 **Movie Manager** is a command-line application for building and maintaining a personal movie library, powered by the OMDb API. You can add films by IMDb ID, assign your own rating, update or delete entries, filter by genre, compute the library’s average rating, and export any subset (or the whole collection) to a clean, readable PDF via `fpdf2`. Data is stored locally in `movies.json`, and your OMDb API key lives in a separate `config.json`.
 
