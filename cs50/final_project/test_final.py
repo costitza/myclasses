@@ -6,9 +6,7 @@ from final import (
     delete_movie, search_movie, sanitize_text
 )
 
-# --------------------------------------
-# TEST: load_from_json
-# --------------------------------------
+
 def test_load_from_json(tmp_path):
     test_file = tmp_path / "movies.json"
     data = [{"title": "Inception", "rating": "9"}]
@@ -26,9 +24,6 @@ def test_load_from_json_missing(tmp_path):
     assert loaded == []
 
 
-# --------------------------------------
-# TEST: save_to_json
-# --------------------------------------
 def test_save_to_json(tmp_path):
     test_file = tmp_path / "movies.json"
     data = [{"title": "Avatar", "rating": "8"}]
@@ -41,9 +36,6 @@ def test_save_to_json(tmp_path):
     assert result == data
 
 
-# --------------------------------------
-# TEST: add_movie
-# --------------------------------------
 def test_add_movie(tmp_path):
     # Start with empty DB
     test_file = tmp_path / "movies.json"
@@ -62,9 +54,6 @@ def test_add_movie(tmp_path):
         assert movie in saved_list
 
 
-# --------------------------------------
-# TEST: delete_movie
-# --------------------------------------
 def test_delete_movie(tmp_path):
     movies = [
         {"title": "The Matrix"},
@@ -85,9 +74,6 @@ def test_delete_movie(tmp_path):
         assert {"title": "The Matrix"} in new_list
 
 
-# --------------------------------------
-# TEST: sanitize_text
-# --------------------------------------
 def test_sanitize_text_basic():
     assert sanitize_text("Hello") == "Hello"
     assert sanitize_text(None) == ""
@@ -100,9 +86,6 @@ def test_sanitize_text_strips_unicode():
     assert "|" in cleaned or "something" in cleaned
 
 
-# --------------------------------------
-# TEST: search_movie (mocked API)
-# --------------------------------------
 def test_search_movie_mock():
     mock_response = {
         "Response": "True",
