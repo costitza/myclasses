@@ -1,7 +1,7 @@
 import json
 import pytest
 from unittest.mock import patch, MagicMock
-from final import (
+from project import (
     load_from_json, save_to_json, add_movie,
     delete_movie, search_movie, sanitize_text
 )
@@ -44,8 +44,8 @@ def test_add_movie(tmp_path):
     movie = {"title": "Interstellar", "rating": "10"}
 
     # Patch load/save to use temp file
-    with patch("final.load_from_json", return_value=[]), \
-         patch("final.save_to_json") as mock_save:
+    with patch("project.load_from_json", return_value=[]), \
+         patch("project.save_to_json") as mock_save:
 
         add_movie(movie)
         mock_save.assert_called_once()
@@ -63,8 +63,8 @@ def test_delete_movie(tmp_path):
     save_to_json(movies, test_file)
 
     # Patch load/save to use temp file
-    with patch("final.load_from_json", return_value=movies.copy()), \
-         patch("final.save_to_json") as mock_save:
+    with patch("project.load_from_json", return_value=movies.copy()), \
+         patch("project.save_to_json") as mock_save:
 
         delete_movie("Inception")
         args, kwargs = mock_save.call_args
