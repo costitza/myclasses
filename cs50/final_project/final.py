@@ -6,8 +6,8 @@ import re
 from fpdf.enums import XPos, YPos
 
 
-
 def user_prompt():
+    """Return the main menu text shown to the user."""
     return f"""
 🎬 Welcome to Movie Manager!
 
@@ -24,8 +24,13 @@ Please choose an option:
     """
 
 
-
 def load_api_key(config_path="config.json"):
+    """Load and return the OMDb API key from a JSON config file.
+
+    Raises:
+        FileNotFoundError: If the config file does not exist.
+        KeyError: If the API_KEY field is missing from the config.
+    """
     try:
         with open(config_path, "r") as file:
             config = json.load(file)
@@ -34,39 +39,40 @@ def load_api_key(config_path="config.json"):
         raise FileNotFoundError("Missing config.json file with API key.")
     except KeyError:
         raise KeyError("API_KEY not found in config.json")
-    
 
 
 def sanitize_text(s: str) -> str:
-    """
-    Make text safe for core PDF fonts (latin-1).
+    """Return text sanitized to Latin-1 so it is safe for core PDF fonts.
+
+    Replaces common Unicode punctuation with ASCII equivalents and strips
+    remaining non-Latin-1 characters.
     """
     if s is None:
         return ""
-    # common replacements that break with core fonts
     replacements = {
         "•": "|",
-        "–": "-",   # en dash
-        "—": "-",   # em dash
+        "–": "-",
+        "—": "-",
         "“": '"',
         "”": '"',
         "‘": "'",
         "’": "'",
         "…": "...",
-        "\u00A0": " ",  # non-breaking space
+        "\u00A0": " ",
     }
     for bad, good in replacements.items():
         s = s.replace(bad, good)
-    # Optional: strip other non-latin-1 chars conservatively
     return s.encode("latin-1", "ignore").decode("latin-1")
 
 
-
-
 def search_movie(id):
+    """Fetch movie details from OMDb by IMDb ID and return a movie dict.
+
+    Returns:
+        dict | None: Normalized movie fields if found, otherwise None.
+    """
     url = f"http://www.omdbapi.com/?i={id}&apikey={API_KEY}"
     response = requests.get(url)
-
     movie = response.json()
     if movie.get("Response") == "False":
         return None
@@ -77,12 +83,15 @@ def search_movie(id):
         "runtime": movie.get("Runtime"),
         "director": movie.get("Director"),
         "actors": movie.get("Actors"),
-        "plot": movie.get("Plot")
+        "plot": movie.get("Plot"),
     }
 
 
-
 def load_from_json(path="movies.json"):
+    """Load and return the movies list from the JSON database.
+
+    Returns an empty list if the file does not exist.
+    """
     try:
         with open(path, "r") as read:
             return json.load(read)
@@ -90,28 +99,35 @@ def load_from_json(path="movies.json"):
         return []
 
 
-
 def save_to_json(data, path="movies.json"):
+    """Persist the given movies list to the JSON database."""
     with open(path, "w") as write:
         json.dump(data, write, indent=4)
 
 
-
 def add_movie(movie):
+    """Append a new movie dict to the JSON database."""
     movies = load_from_json()
     movies.append(movie)
     save_to_json(movies)
 
 
-
 def delete_movie(title, path="movies.json"):
+    """Delete a movie by title (case-insensitive) from the JSON database."""
     movies = load_from_json()
     new_lst = [movie for movie in movies if movie["title"].lower() != title.lower()]
     save_to_json(new_lst)
 
 
-
 def export_to_pdf(movies=None, db_path="movies.json", output="movies.pdf", pdf_title="My Movie Library"):
+    """Export movies (all or provided subset) into a styled PDF document.
+
+    Args:
+        movies (list|None): Optional list of movie dicts to export. If None, load from db_path.
+        db_path (str): Path to JSON database if movies is None.
+        output (str): Output PDF file path.
+        pdf_title (str): Title displayed in the PDF header.
+    """
     if movies is None:
         movies = load_from_json(db_path)
     if not movies:
@@ -124,12 +140,10 @@ def export_to_pdf(movies=None, db_path="movies.json", output="movies.pdf", pdf_t
     pdf.set_author("Movie Manager")
     pdf.set_title(pdf_title)
 
-    # Header
     pdf.set_font("Helvetica", "B", 22)
     pdf.set_text_color(0, 0, 0)
     pdf.set_xy(0, 10)
-    pdf.cell(0, 10, pdf_title, align="C",
-             new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    pdf.cell(0, 10, pdf_title, align="C", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
     pdf.ln(3)
 
     LEFT = 12
@@ -146,49 +160,39 @@ def export_to_pdf(movies=None, db_path="movies.json", output="movies.pdf", pdf_t
         plot     = sanitize_text(m.get("plot", ""))
         rating   = m.get("rating", "N/A")
 
-        # Title row
         pdf.set_font("Helvetica", "B", 14)
         pdf.set_x(LEFT)
-        pdf.cell(0, 8, f"{title} ({year})",
-                 new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        pdf.cell(0, 8, f"{title} ({year})", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
-        # Meta row
         pdf.set_font("Helvetica", "", 11)
         pdf.set_x(LEFT)
         meta = f"IMDb: {imdb_id} | {runtime} | Director: {director}"
         pdf.cell(0, 6, meta, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
-        # 🔹 Genre row (added)
         pdf.set_x(LEFT)
         pdf.cell(0, 6, f"Genre: {genre}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
-        # Actors
         pdf.set_x(LEFT)
         pdf.multi_cell(0, 6, f"Actors: {actors}")
 
-        # Plot
         if plot:
             pdf.ln(1)
             pdf.set_x(LEFT)
             pdf.multi_cell(0, 6, f"Plot: {plot}")
 
-        # Rating
         if isinstance(rating, (int, float)) or (isinstance(rating, str) and rating.isdigit()):
             r = int(rating)
             r = max(0, min(r, 10))
             pdf.ln(1)
             pdf.set_x(LEFT)
             pdf.set_font("Helvetica", "B", 10)
-            pdf.cell(0, 6, f"Your rating: {r}/10",
-                     new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+            pdf.cell(0, 6, f"Your rating: {r}/10", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
         elif rating not in (None, "", "N/A"):
             pdf.ln(1)
             pdf.set_x(LEFT)
             pdf.set_font("Helvetica", "B", 10)
-            pdf.cell(0, 6, f"Your rating: {sanitize_text(str(rating))}",
-                     new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+            pdf.cell(0, 6, f"Your rating: {sanitize_text(str(rating))}", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
-        # separator
         pdf.ln(2)
         y = pdf.get_y()
         pdf.set_draw_color(220, 220, 220)
@@ -200,12 +204,8 @@ def export_to_pdf(movies=None, db_path="movies.json", output="movies.pdf", pdf_t
     print(f"PDF exported to {output}")
 
 
-
-
 def menu_1():
-    '''
-    Add a movie using the IMDb ID
-    '''
+    """Prompt for an IMDb ID, fetch the movie from OMDb, rate it, and add it to the database."""
     pattern = r"^tt\d{7}\d*$"
     str = input("Add movie by IMDb id: ")
 
@@ -238,11 +238,8 @@ def menu_1():
     return
 
 
-
 def menu_2():
-    '''
-    Update the rating on a movie
-    '''
+    """Update the rating of a stored movie by title or IMDb ID."""
     key = input("Movie you want to update the rating on (title or id): ")
 
     movies = load_from_json()
@@ -269,12 +266,8 @@ def menu_2():
     print("Rating saved succesfully!")
 
 
-
-
 def menu_3():
-    '''
-    Delete movie from library
-    '''
+    """Delete a movie from the database by title (case-insensitive)."""
     key = input("Movie you want to delete (title): ")
     movies = load_from_json()
     titles = [movie["title"] for movie in movies]
@@ -287,9 +280,8 @@ def menu_3():
     print("Movie removed succesfully!")
 
 
-
-
 def menu_4():
+    """Filter library by a genre, then export that subset to a PDF with a genre-specific title."""
     key = input("Genre you want to filter on: ").strip().lower()
     movies = load_from_json()
 
@@ -304,40 +296,32 @@ def menu_4():
     print("Exported genre succesfully!")
 
 
-
 def menu_5():
+    """Compute and print the average rating across all movies in the library."""
     movies = load_from_json()
     rating_sum = sum([int(movie["rating"]) for movie in movies])
-
     counter = sum([1 for _ in movies])
-
     print(f"The average movie rating is {round(rating_sum / counter, 2)}")
 
 
-
 def menu_6():
+    """Export the top 5 highest-rated movies (tie-broken by title) to a PDF."""
     movies = load_from_json()
-
     top_movies = sorted(movies, key=lambda movie: (-int(movie["rating"]), movie["title"].lower()))[:5]
-
     export_to_pdf(top_movies, output="top_movies.pdf", pdf_title="My top 5 movies")
 
 
-
 def exit_function():
-    '''
-    Saves the json database to pdf and then exits using sys.exit()
-    '''
+    """Export the full library to PDF and terminate the program."""
     export_to_pdf()
     sys.exit("Goodbye!")
-
 
 
 API_KEY = load_api_key()
 
 
-
 def main():
+    """Run the interactive CLI loop until the user exits or sends EOF."""
     try:
         while True:
             print(user_prompt())
@@ -362,7 +346,6 @@ def main():
                     pass
     except EOFError:
         sys.exit("Program exited without saving!!")
-
 
 
 if __name__ == "__main__":
