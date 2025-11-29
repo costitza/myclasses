@@ -292,7 +292,7 @@ def menu_4():
         if key in genres:
             movies_genres.append(movie)
 
-    export_to_pdf(movies_genres, output=f"genre_{key}.pdf", pdf_title=f"Movie genre: {key.higher()}")
+    export_to_pdf(movies_genres, output=f"genre_{key}.pdf", pdf_title=f"Movie genre: {key.capitalize()}")
     print("Exported genre succesfully!")
 
 
@@ -325,7 +325,7 @@ def main():
     try:
         while True:
             print(user_prompt())
-            client = input("Enter choice (1-6): ")
+            client = input("Enter choice (1-7): ")
             match client:
                 case "1":
                     menu_1()
