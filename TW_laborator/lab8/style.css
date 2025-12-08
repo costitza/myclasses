@@ -1,5 +1,6 @@
 body {
   background-color: black;
+  color: white;
 }
 
 #container {
@@ -13,11 +14,51 @@ body {
   width: 400px;
   height: 300px;
   overflow: hidden;
-  /* clip-path: circle(50%); */
+  clip-path: circle(50%);
 }
 
 .crop img {
   margin: -30px 0 0 -20px;
 }
 
+#vizor.flash {
+  animation: shutter 0.2s ease-out;
+}
+
+@keyframes shutter {
+  0%   { clip-path: inset(0); }
+  50%  { clip-path: inset(50% 0); }
+  100% { clip-path: inset(0); }
+}
+
+/* opțional, pozele din galerie mai mici */
+#gallery {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#gallery .snapshot {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+
+#gallery .snapshot #vizor {
+  width: 100%;
+  height: 100%;
+}
+
+#vizor img{
+  transform-origin: top left;
+}
+
+#timer {
+  margin-top: 5px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
 
