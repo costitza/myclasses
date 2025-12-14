@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Formular pentru intrarea în Sistemul Solar</title>
+      <meta charset="utf-8">
+      <link rel="stylesheet" href="style.css" type="text/css">
+      <script type="text/javascript" src="form.js"></script>
+   </head>
+   <body>
+      <h3>FORMULAR PENTRU INTRAREA ÎN SISTEMUL SOLAR</h3>
+      
+      <div id="container"> 
+        <form action="Earth" method="post" target="_self">
+
+            <fieldset>
+                <legend>Date personale</legend>
+                
+                <label for="nume">Nume complet:</label>
+                <input type="text" id="nume" name="nume">
+                <br><br>
+
+                <label for="id_unic">ID unic:</label>
+                <input type="text" id="id_unic" name="id_unic">
+                <br><br>
+
+                <label for="rasa">Rasă:</label>
+                <select id="rasa" name="rasa">
+                    <option value="" disabled selected>--Please choose an option--</option>
+                    <option value="uman">Uman</option>
+                    <option value="martian">Marțian</option>
+                    <option value="venusian">Venusian</option>
+                </select>
+                <br><br>
+
+                <label for="data_nasterii">Data nașterii:</label>
+                <input type="date" id="data_nasterii" name="data_nasterii" value="2023-07-05">
+                <br><br>
+
+                <label for="credit_social">Credit social:</label>
+                <input type="range" id="credit_social" name="credit_social" min="0" max="500">
+                <span>500</span>
+                <br><br>
+
+                <label for="foto">Fotografie:</label>
+                <input type="file" id="foto" name="foto">
+            </fieldset>
+
+            <br>
+
+            <fieldset>
+                <legend>Contact</legend>
+
+                <label for="galaxie">Galaxie proveniență:</label>
+                <input type="text" id="galaxie" name="galaxie">
+                <br><br>
+
+                <label for="planeta">Planetă proveniență:</label>
+                <input type="text" id="planeta" name="planeta">
+                <br><br>
+
+                <label for="adresa">Adresa:</label>
+                <textarea id="adresa" name="adresa" rows="3"></textarea>
+                <br><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+                <br><br>
+
+                <label for="telefon">Telefon:</label>
+                <input type="tel" id="telefon" name="telefon">
+                <br>
+                <small>(Format intergalactic)</small>
+                <br><br>
+
+                <label for="web">Web URL:</label>
+                <input type="url" id="web" name="web" value="https://example.com">
+            </fieldset>
+
+            <br>
+
+            <fieldset>
+                <legend>Semnalmente fizice</legend>
+
+                <label for="inaltime">Înălțime (10-300cm):</label>
+                <input type="number" id="inaltime" name="inaltime" min="10" max="300">
+                <br><br>
+
+                <label for="greutate">Greutate (1-500kg):</label>
+                <input type="number" id="greutate" name="greutate" min="1" max="500">
+                <br><br>
+
+                <label for="membre">Nr. membre:</label>
+                <input type="number" id="membre" name="membre">
+                <br><br>
+
+                <label for="ochi">Nr. ochi:</label>
+                <input type="number" id="ochi" name="ochi">
+                <br><br>
+
+                <label for="culoare">Culoare:</label>
+                <input type="color" id="culoare" name="culoare" value="#000000">
+            </fieldset>
+
+            <br>
+
+            <fieldset>
+                <legend>Vizită</legend>
+
+                <label for="data_sosire">Dată sosire:</label>
+                <input type="date" id="data_sosire" name="data_sosire" value="2023-07-05">
+                <br><br>
+
+                <label for="timp_sosire">Timp estimat sosire:</label>
+                <input type="time" id="timp_sosire" name="timp_sosire">
+                <br><br>
+
+                <label>Ședere:</label>
+                <input type="radio" id="temporara" name="sedere" value="temporara" checked>
+                <label for="temporara">Temporară</label>
+                
+                <input type="radio" id="permanenta" name="sedere" value="permanenta">
+                <label for="permanenta">Permanentă</label>
+                <br><br>
+
+                <label>Scopul vizitei:</label><br>
+                <input type="checkbox" id="afaceri" name="scop" value="afaceri">
+                <label for="afaceri">Afaceri</label><br>
+                
+                <input type="checkbox" id="turism" name="scop" value="turism">
+                <label for="turism">Turism</label><br>
+                
+                <input type="checkbox" id="social" name="scop" value="social">
+                <label for="social">Social (familie & prieteni)</label><br>
+                
+                <input type="checkbox" id="invazie" name="scop" value="invazie" checked>
+                <label for="invazie">Invazie</label><br>
+                
+                <input type="checkbox" id="altul" name="scop" value="altul">
+                <label for="altul">Altul</label>
+                <br><br>
+
+                <label for="comentarii">Comentarii:</label><br>
+                <textarea id="comentarii" name="comentarii" rows="4"></textarea>
+            </fieldset>
+
+            <br>
+
+            <button type="submit">Trimite cerere</button>
+
+        </form>
+      </div>
+   </body>
+</html>
