@@ -4,7 +4,13 @@
       <title>Formular pentru intrarea în Sistemul Solar</title>
       <meta charset="utf-8">
       <link rel="stylesheet" href="style.css" type="text/css">
-      <script type="text/javascript" src="form.js"></script>
+      <script src="form.js" defer></script>
+      <style>
+          /* CSS simplu pentru a preveni redimensionarea textarea */
+          textarea {
+              resize: none; 
+          }
+      </style>
    </head>
    <body>
       <h3>FORMULAR PENTRU INTRAREA ÎN SISTEMUL SOLAR</h3>
@@ -16,138 +22,155 @@
                 <legend>Date personale</legend>
                 
                 <label for="nume">Nume complet:</label>
-                <input type="text" id="nume" name="nume">
+                <input type="text" id="nume" name="nume" minlength="3" maxlength="30" required placeholder="Numele pământean sau galactic">
                 <br><br>
 
-                <label for="id_unic">ID unic:</label>
-                <input type="text" id="id_unic" name="id_unic">
-                <br><br>
-
-                <label for="rasa">Rasă:</label>
-                <select id="rasa" name="rasa">
-                    <option value="" disabled selected>--Please choose an option--</option>
-                    <option value="uman">Uman</option>
-                    <option value="martian">Marțian</option>
-                    <option value="venusian">Venusian</option>
-                </select>
+                <label for="id_unic">ID unic intergalactic:</label>
+                <input type="text" id="id_unic" name="id_unic" minlength="8" maxlength="20" pattern="[A-Z0-9-]+" title="Doar litere mari, cifre și cratime (Ex: GAL-X99)" required>
                 <br><br>
 
                 <label for="data_nasterii">Data nașterii:</label>
-                <input type="date" id="data_nasterii" name="data_nasterii" value="2023-07-05">
+                <input type="date" id="data_nasterii" name="data_nasterii" min="1800-01-01" max="2024-05-13" required>
                 <br><br>
 
-                <label for="credit_social">Credit social:</label>
-                <input type="range" id="credit_social" name="credit_social" min="0" max="500">
-                <span>500</span>
+                <label for="credit_social">Credit social acumulat:</label>
+                <input type="range" id="credit_social" name="credit_social" min="0" max="2000" step="50" value="500" required oninput="document.getElementById('valoare_credit').textContent = this.value">
+                <span id="valoare_credit" style="font-weight:bold;">500</span> credite
                 <br><br>
 
                 <label for="foto">Fotografie:</label>
-                <input type="file" id="foto" name="foto">
+                <input type="file" id="foto" name="foto" accept="image/*" required>
+                <br><br>
+
+                <label for="rasa">Rasă:</label>
+                <select id="rasa" name="rasa" required>
+                    <option value="" disabled selected>-- Selectează specia --</option>
+                      <option value="hutt">Hutt</option>
+                      <option value="jawa">Jawa</option>
+                      <option value="mandalorian">Mandalorians</option>
+                      <option value="rodian">Rodian</option>
+                      <option value="wookie">Wookie</option>
+                      <option value="romulan">Romulan</option>
+                      <option value="protoss">Protoss</option>
+                      <option value="zerg">Zerg</option>
+                      <option value="autobot">Autobot</option>
+                      <option value="daimons">Daimons</option>
+                      <option value="deep_ones">Deep Ones</option>
+                      <option value="experiment">Experiment</option>
+                      <option value="goauld">Goa'uld</option>
+                      <option value="kryptonian">Kryptonian</option>
+                      <option value="martian">Martian</option>
+                      <option value="tleilaxu">Tleilaxu</option>
+                      <option value="vogon">Vogon</option>
+                      <option value="xenu">Xenu</option>
+                      <option value="yeti">Yeti</option>
+                </select>
             </fieldset>
 
             <br>
 
             <fieldset>
-                <legend>Contact</legend>
+                <legend>Date de contact</legend>
 
                 <label for="galaxie">Galaxie proveniență:</label>
-                <input type="text" id="galaxie" name="galaxie">
+                <input type="text" id="galaxie" name="galaxie" required>
                 <br><br>
 
                 <label for="planeta">Planetă proveniență:</label>
-                <input type="text" id="planeta" name="planeta">
+                <input type="text" id="planeta" name="planeta" required>
                 <br><br>
 
-                <label for="adresa">Adresa:</label>
-                <textarea id="adresa" name="adresa" rows="3"></textarea>
-                <br><br>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email">
+                <label for="adresa">Adresa completă:</label>
+                <textarea id="adresa" name="adresa" rows="3" required placeholder="Coordonate spațiale sau adresa fizică"></textarea>
                 <br><br>
 
                 <label for="telefon">Telefon:</label>
-                <input type="tel" id="telefon" name="telefon">
-                <br>
-                <small>(Format intergalactic)</small>
+                <input type="tel" id="telefon" name="telefon" pattern="\+\d{2,3}-\d{3,}-\d{4,}" title="Format intergalactic: +CodGalaxie-Sector-Numar (Ex: +40-722-0000)" required>
+                <br><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
                 <br><br>
 
                 <label for="web">Web URL:</label>
-                <input type="url" id="web" name="web" value="https://example.com">
+                <input type="url" id="web" name="web" pattern="https?://.+" title="Includeți http:// sau https://" required>
+
+                
             </fieldset>
 
             <br>
+
 
             <fieldset>
                 <legend>Semnalmente fizice</legend>
 
-                <label for="inaltime">Înălțime (10-300cm):</label>
-                <input type="number" id="inaltime" name="inaltime" min="10" max="300">
+                <label for="inaltime">Înălțime (cm):</label>
+                <input type="number" id="inaltime" name="inaltime" min="10" max="300" required placeholder="10-300">
                 <br><br>
 
-                <label for="greutate">Greutate (1-500kg):</label>
-                <input type="number" id="greutate" name="greutate" min="1" max="500">
+                <label for="greutate">Greutate (kg):</label>
+                <input type="number" id="greutate" name="greutate" min="1" max="500" required placeholder="1-500">
                 <br><br>
 
-                <label for="membre">Nr. membre:</label>
-                <input type="number" id="membre" name="membre">
+                <label for="membre">Număr membre:</label>
+                <input type="number" id="membre" name="membre" min="0" required>
                 <br><br>
 
-                <label for="ochi">Nr. ochi:</label>
-                <input type="number" id="ochi" name="ochi">
+                <label for="ochi">Număr ochi:</label>
+                <input type="number" id="ochi" name="ochi" min="0" required>
                 <br><br>
 
-                <label for="culoare">Culoare:</label>
-                <input type="color" id="culoare" name="culoare" value="#000000">
+                <label for="culoare">Culoare (piele/carapace):</label>
+                <input type="color" id="culoare" name="culoare" value="#ffffff">
+                <small>Selectați culoarea pentru previzualizare fundal</small>
             </fieldset>
 
+        <fieldset>
+            <legend>Detalii vizită</legend>
+
+            <label for="data_sosire">Data sosire:</label>
+            <input type="date" id="data_sosire" name="data_sosire" min="2024-05-13" max="2034-05-13" required>
+            <br><br>
+
+            <label for="ora_sosire">Ora estimată:</label>
+            <input type="time" id="ora_sosire" name="ora_sosire" required>
+            <br><br>
+
+            <label>Tipul de ședere:</label>
+            <div>
+                <input type="radio" id="temp" name="tip_sedere" value="temporara" checked required>
+                <label for="temp">Temporară</label>
+                
+                <input type="radio" id="perm" name="tip_sedere" value="permanenta">
+                <label for="perm">Permanentă</label>
+            </div>
             <br>
 
-            <fieldset>
-                <legend>Vizită</legend>
-
-                <label for="data_sosire">Dată sosire:</label>
-                <input type="date" id="data_sosire" name="data_sosire" value="2023-07-05">
-                <br><br>
-
-                <label for="timp_sosire">Timp estimat sosire:</label>
-                <input type="time" id="timp_sosire" name="timp_sosire">
-                <br><br>
-
-                <label>Ședere:</label>
-                <input type="radio" id="temporara" name="sedere" value="temporara" checked>
-                <label for="temporara">Temporară</label>
-                
-                <input type="radio" id="permanenta" name="sedere" value="permanenta">
-                <label for="permanenta">Permanentă</label>
-                <br><br>
-
-                <label>Scopul vizitei:</label><br>
-                <input type="checkbox" id="afaceri" name="scop" value="afaceri">
-                <label for="afaceri">Afaceri</label><br>
-                
-                <input type="checkbox" id="turism" name="scop" value="turism">
-                <label for="turism">Turism</label><br>
-                
-                <input type="checkbox" id="social" name="scop" value="social">
-                <label for="social">Social (familie & prieteni)</label><br>
-                
+            <label>Scopul vizitei:</label>
+            <div id="scop_container">
                 <input type="checkbox" id="invazie" name="scop" value="invazie" checked>
                 <label for="invazie">Invazie</label><br>
-                
-                <input type="checkbox" id="altul" name="scop" value="altul">
-                <label for="altul">Altul</label>
-                <br><br>
 
-                <label for="comentarii">Comentarii:</label><br>
-                <textarea id="comentarii" name="comentarii" rows="4"></textarea>
-            </fieldset>
+                <input type="checkbox" id="turism" name="scop" value="turism">
+                <label for="turism">Turism</label><br>
 
+                <input type="checkbox" id="afaceri" name="scop" value="afaceri">
+                <label for="afaceri">Afaceri</label><br>
+
+                <input type="checkbox" id="studii" name="scop" value="studii">
+                <label for="studii">Studii (Schimb de experiență)</label>
+            </div>
+            <small id="scop_error" style="color:red; display:none;">Selectați cel puțin un motiv!</small>
             <br>
 
-            <button type="submit">Trimite cerere</button>
+            <label for="alte_detalii">Alte detalii:</label>
+            <textarea id="alte_detalii" name="alte_detalii" rows="4" placeholder="Mesaj pentru pământeni..."></textarea>
+        </fieldset>
+        <br>
 
+        <button type="submit" id="btn_trimite">Trimite cerere de aterizare</button>
         </form>
       </div>
+
    </body>
 </html>
