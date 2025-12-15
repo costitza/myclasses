@@ -1,61 +1,47 @@
 window.onload = function() {
-    // 1. DEFINIM VARIABILELE PRINCIPALE (Aici era greșeala, lipseau aceste linii)
     const form = document.querySelector('form');
     const container = document.getElementById('container');
     const colorPicker = document.getElementById('culoare');
 
-    // 2. LOGICA PENTRU CULOARE
     function applyColor(color) {
         document.body.style.backgroundColor = color;
         colorPicker.value = color; 
     }
 
-    // Verificăm LocalStorage la încărcare
     const savedColor = localStorage.getItem('alien_skin_color');
     if (savedColor) {
         applyColor(savedColor);
     }
 
-    // Ascultăm schimbarea culorii
     colorPicker.addEventListener('input', function(event) {
         const selectedColor = event.target.value;
         document.body.style.backgroundColor = selectedColor;
         localStorage.setItem('alien_skin_color', selectedColor);
     });
 
-
-    // 3. LOGICA PENTRU SUBMIT (Unificat într-un singur loc)
     form.addEventListener('submit', function(event) {
-        // Oprim trimiterea standard a formularului
         event.preventDefault(); 
 
-        // --- VERIFICARE 1: Credit Social ---
         const credit = document.getElementById('credit_social').value;
-        // Notă: în HTML ai pus min="0", deci logic ar trebui verificat o valoare
-        // Dar am păstrat logica ta cu < 50
         if (parseInt(credit) < 50) {
             alert("Eroare: Creditul social este prea mic (minim 50)!");
-            return; // Oprim execuția aici
+            return;
         }
 
-        // --- VERIFICARE 2: Checkbox-uri ---
         const checkboxes = document.querySelectorAll('input[name="scop"]:checked');
         const errorMsg = document.getElementById('scop_error');
 
         if (checkboxes.length === 0) {
             errorMsg.style.display = 'block';
             alert("Vă rugăm selectați cel puțin un scop al vizitei!");
-            // Focus pe zona cu probleme
             document.getElementById('scop_container').scrollIntoView({behavior: "smooth"});
-            return; // Oprim execuția aici
+            return;
         } else {
             errorMsg.style.display = 'none';
         }
 
-        // --- EXTRAGERE NUME (Lipsește definirea variabilei în codul tău vechi) ---
         const numeAlien = document.getElementById('nume').value;
 
-        // --- GO WILD: Modificarea paginii ---
         console.log("Formular validat. Se trimite către Terra...");
         
         container.innerHTML = `
