@@ -1,19 +1,34 @@
 
 #container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: flex-start;
-}
-
-#info {
-  /* ... */
+    display: flex;
+    gap: 20px;          
+    padding: 20px;
 }
 
 #gallery {
-  display: grid; 
-  /* ... */
+    width: 60%;
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px;
 }
 
 
+.album-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer; 
+}
 
+.album-card img {
+    width: 100%;   
+    height: auto;
+}
+
+
+#info {
+    width: 40%;    
+    border: 1px solid #333;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
