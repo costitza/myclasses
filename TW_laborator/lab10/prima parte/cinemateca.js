@@ -21,7 +21,6 @@ jsonButton.addEventListener("click", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-
     fetch("cinemateca.xml")
         .then(response => {
             if (!response.ok) {
@@ -30,16 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
             return response.text();
         })
         .then(str => {
-            // Aici avem conținutul XML ca text, îl parsăm
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(str, "text/xml");
-
-            // Verificăm erorile de parsare
             if (xmlDoc.getElementsByTagName("parsererror").length > 0) {
                 console.error("Eroare la parsarea XML-ului!");
                 return;
             }
-
             proceseazaSiAfiseaza(xmlDoc);
         })
         .catch(error => {
@@ -51,11 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
 function proceseazaSiAfiseaza(xmlDoc) {
     const filmeArray = [];
     const filmeNodes = xmlDoc.getElementsByTagName("film");
-
     for (let i = 0; i < filmeNodes.length; i++) {
         const filmNode = filmeNodes[i];
-        
-        // Extragem actorii
         const actoriNodes = filmNode.getElementsByTagName("actor");
         const actoriList = [];
         for(let j = 0; j < actoriNodes.length; j++) {
@@ -64,8 +56,6 @@ function proceseazaSiAfiseaza(xmlDoc) {
                 rol: actoriNodes[j].getAttribute("tip")
             });
         }
-
-        // Construim obiectul
         const filmObj = {
             titlu: filmNode.getElementsByTagName("titlu")[0].textContent,
             limba: filmNode.getElementsByTagName("titlu")[0].getAttribute("limba"),
@@ -77,26 +67,21 @@ function proceseazaSiAfiseaza(xmlDoc) {
             actori: actoriList,
             scor: filmNode.getElementsByTagName("scor")[0].textContent
         };
-
         filmeArray.push(filmObj);
     }
-
     afiseazaFilme(filmeArray);
 }
 
 function afiseazaFilme(filme) {
     const container = document.getElementById("lista-filme");
-    container.innerHTML = ""; // Curățăm containerul
-
+    container.innerHTML = "";
     filme.forEach(film => {
         const filmDiv = document.createElement("div");
         filmDiv.className = "film-container";
-
         const titluH3 = document.createElement("h3");
         titluH3.className = "film-titlu";
         titluH3.textContent = `${film.titlu} (${film.an})`;
         filmDiv.appendChild(titluH3);
-
         const listaDetalii = document.createElement("ul");
         listaDetalii.innerHTML = `
             <li><strong>Titlu original:</strong> ${film.titlu} (Limba: ${film.limba})</li>
@@ -111,7 +96,6 @@ function afiseazaFilme(filme) {
                 </ul>
             </li>
         `;
-
         filmDiv.appendChild(listaDetalii);
         container.appendChild(filmDiv);
     });
@@ -122,7 +106,6 @@ function fromXMLtoJSON(xmlDoc){
     const filmeNodes = xmlDoc.getElementsByTagName("film");
     for (let i = 0; i < filmeNodes.length; i++) {
         const filmNode = filmeNodes[i];
-        // Extragem actorii
         const actoriNodes = filmNode.getElementsByTagName("actor");
         const actoriList = [];
         for(let j = 0; j < actoriNodes.length; j++) {
@@ -131,7 +114,6 @@ function fromXMLtoJSON(xmlDoc){
                 rol: actoriNodes[j].getAttribute("tip")
             });
         }
-        // Construim obiectul
         const filmObj = {
             titlu: filmNode.getElementsByTagName("titlu")[0].textContent,
             limba: filmNode.getElementsByTagName("titlu")[0].getAttribute("limba"),
@@ -149,26 +131,14 @@ function fromXMLtoJSON(xmlDoc){
 }
 
 function descarcaJSON(data, numeFisier) {
-    // 1. Convertim obiectul JavaScript în text JSON
-    // null, 2 este pentru indentare frumoasă (ușor de citit de oameni)
     const jsonString = JSON.stringify(data, null, 2);
-
-    // 2. Creăm un Blob (Binary Large Object) cu tipul JSON
     const blob = new Blob([jsonString], { type: "application/json" });
-
-    // 3. Creăm un URL temporar pentru acest Blob
     const url = URL.createObjectURL(blob);
-
-    // 4. Creăm un element <a> invizibil pentru a simula click-ul de download
     const link = document.createElement("a");
     link.href = url;
-    link.download = numeFisier; // Numele fișierului descărcat
-    
-    // 5. Adăugăm link-ul în document, dăm click și îl ștergem
+    link.download = numeFisier;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-
-    // 6. Eliberăm URL-ul din memorie
     URL.revokeObjectURL(url);
 }
