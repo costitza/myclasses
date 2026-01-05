@@ -1,0 +1,42 @@
+[
+  {
+    "titlu": "Inception",
+    "limba": "en",
+    "gen": "Science Fiction",
+    "regizor": "Christopher Nolan",
+    "an": "2010",
+    "scenarist": "Christopher Nolan",
+    "producator": "Emma Thomas",
+    "actori": [
+      {
+        "nume": "Leonardo DiCaprio",
+        "rol": "principal"
+      },
+      {
+        "nume": "Joseph Gordon-Levitt",
+        "rol": "secundar"
+      }
+    ],
+    "scor": "8.8"
+  },
+  {
+    "titlu": "The Godfather",
+    "limba": "en",
+    "gen": "Dramă",
+    "regizor": "Francis Ford Coppola",
+    "an": "1972",
+    "scenarist": "Mario Puzo",
+    "producator": "Albert S. Ruddy",
+    "actori": [
+      {
+        "nume": "Marlon Brando",
+        "rol": "principal"
+      },
+      {
+        "nume": "Al Pacino",
+        "rol": "principal"
+      }
+    ],
+    "scor": "9.2"
+  }
+]

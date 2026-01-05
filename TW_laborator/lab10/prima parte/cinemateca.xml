@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cinemateca>
+    <film>
+        <titlu limba="en">Inception</titlu>
+        <gen>Science Fiction</gen>
+        <regizor>Christopher Nolan</regizor>
+        <an>2010</an>
+        <scenarist>Christopher Nolan</scenarist>
+        <producator>Emma Thomas</producator>
+        <actori>
+            <actor tip="principal">Leonardo DiCaprio</actor>
+            <actor tip="secundar">Joseph Gordon-Levitt</actor>
+        </actori>
+        <scor>8.8</scor>
+    </film>
+    <film>
+        <titlu limba="en">The Godfather</titlu>
+        <gen>Dramă</gen>
+        <regizor>Francis Ford Coppola</regizor>
+        <an>1972</an>
+        <scenarist>Mario Puzo</scenarist>
+        <producator>Albert S. Ruddy</producator>
+        <actori>
+            <actor tip="principal">Marlon Brando</actor>
+            <actor tip="principal">Al Pacino</actor>
+        </actori>
+        <scor>9.2</scor>
+    </film>
+</cinemateca>
