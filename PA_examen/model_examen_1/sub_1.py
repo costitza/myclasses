@@ -12,13 +12,14 @@ def numere(*args):
         if dict.get(medie) is None:
             dict[medie] = [element]
         else:
-            dict[medie].append(element)
+            if element not in dict[medie]:
+                dict[medie].append(element)
     return dict
 
 # 82375, 201, 51, 73, 3456, 2855, 1021, 90, 153
 
 def main():
-    print(numere(82375, 201, 51, 73, 3456, 2855, 1021, 90, 153))
+    print(numere(82375, 201, 51, 73, 3456, 2855, 1021, 90, 153, 2855))
 
 
 if __name__ == "__main__":
