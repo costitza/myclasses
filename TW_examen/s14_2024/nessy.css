@@ -1,0 +1,100 @@
+.container{
+
+    display: grid;
+
+    grid-template-areas: 
+    "zona0 zona0 ."
+    ". zona1 ."
+    ". zona2 ."
+    ". zona3 ."
+    ". zona4 zona4"
+    ". zona5 zona6";
+    gap: 5px;
+
+    width: 240px;
+
+    align-items: center;
+}
+
+
+div > .circle{
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    background-color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.container > .i0{
+    
+    grid-area: zona0;
+
+    height: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.container > .i4{
+    align-self: flex-end;
+    grid-area: zona4;
+}
+
+.i1{ grid-area: zona1;}
+.i2{ grid-area: zona2; }
+.i3{ grid-area: zona3; }
+.i4{ grid-area: zona4; }
+.i5{ grid-area: zona5; }
+.i6{ grid-area: zona6; }
+
+.container > div { 
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+
+    padding: 23px;
+
+    height: 80px;
+    background-color: plum;
+    text-decoration-color: darkmagenta;
+    
+
+    border: 4px darkmagenta dashed;
+    box-sizing: border-box;
+}
+
+.circle:hover{
+    background-color: darkmagenta;
+
+
+    transform: scale(0.25);
+    transition: 0.3s ease;
+}
+
+@media (min-width: 300px) and (max-width: 500px){
+
+    .container{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        grid-template-columns: none;
+        gap: 0px;
+    }
+
+    .container > div{
+        width: 100%;
+
+    }
+
+}
