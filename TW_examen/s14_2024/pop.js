@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const displayscore = document.getElementById('score');
     let score = parseInt(localStorage.getItem('score')) || 0;
+    let misca = null;
 
     const updatescore = () => {
         displayscore.textContent = `Baloane sparte: ${score}`;
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         balloon.classList.add("balloon");
         balloon.style.position = "absolute";
-        balloon.style.top = getRandom(0, innerHeight) + "px";
+        balloon.style.top = getRandom(30, innerHeight - 30) + "px";
         balloon.style.left = getRandom(0, innerWidth) + "px";
 
         // pentru spart
@@ -80,11 +81,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    const balloons = document.getElementsByClassName('balloon');
+    const arr = Array.from(balloons);
 
     document.addEventListener('keydown', (event) => {
+
         if (event.key === 'b'){
             console.log("s-a apasat");
             createBalloon();
+        }
+        else if (event.key === 'p'){
+
+            console.log('a pornit');
+            if (misca === null){
+                misca = setInterval(() => {
+
+                    baloane = document.querySelectorAll('.balloon');
+                    
+                    baloane.forEach(element => {
+                        
+                        const top = parseFloat(element.style.top);
+                        element.style.top = `${top - 4}px`;
+                    });
+
+                }, 30)
+
+            }
+
+        }
+        else if (event.key === 'f'){
+            clearInterval(misca);
+            misca = null;
         }
     });
 });
