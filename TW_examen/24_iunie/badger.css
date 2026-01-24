@@ -1,0 +1,13 @@
+html {
+ height: 100%;
+}
+
+body {
+ background-color: LimeGreen ;
+ height: 100%;
+}
+
+.badger {
+    height: 30px;
+    width: 100px;
+}

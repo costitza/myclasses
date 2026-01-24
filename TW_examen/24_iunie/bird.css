@@ -1,0 +1,80 @@
+
+
+.container{
+    display: grid;
+    grid-template-columns: repeat(5, 75px);
+
+    grid-template-rows: repeat(7, 75px);
+
+    grid-template-areas: 
+    ". b b . . "
+    "a b b . . "
+    ". . c . . "
+    ". . d . . "
+    ". . e e e "
+    ". . e e e "
+    ". . . f .";
+
+    gap: 4px;
+}
+
+.n1{ grid-area: a;}
+.n2{ grid-area: b;}
+.n3{ grid-area: c;}
+.n4{ grid-area: d;}
+.n5{ grid-area: e;}
+.n6{ grid-area: f;}
+
+
+.n1, .n2, .n3, .n4, .n5, .n6{
+    padding: 22px;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    background-color: floralwhite;
+    border: 4px dashed black;
+
+}
+
+.circle{
+    border-radius: 50%;
+    background-color: lightgray;
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.n1, .n6{
+    background-color: coral;
+}
+
+.circle:hover{
+
+    background-color: crimson;
+    text-decoration-color: crimson;
+    transform: scale(0.33);
+
+    transition: 0.3s ease;
+}
+
+
+@media (min-width: 350px) and (max-width: 600px) {
+    
+    .container{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .circle{
+        transform: scaleX(0.5);
+    }
+
+    .n1, .n2, .n3, .n4, .n5, .n6{
+        width: 100%;
+    }
+}
