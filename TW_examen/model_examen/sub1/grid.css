@@ -1,0 +1,51 @@
+
+.wrapper{
+    display: grid;
+    grid-template-columns: repeat(2, 150px);
+    grid-template-rows: repeat(3, 70px);
+
+    grid-template-areas: 
+    "a b"
+    "c d"
+    "c d";
+
+    gap: 10px;
+    row-gap: 10px;
+}
+
+.n4{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    grid-area: d;
+}
+
+.n1{ grid-area: a;}
+.n2{ grid-area: b;}
+.n3{ grid-area: c;}
+
+.n1, .n2, .n3, .n4{
+    color: white;
+    padding: 20px;
+    background-color: black;
+    border: 2px dashed white;
+}
+
+.n5{
+    width: 100%;
+    height: 45%;
+}
+
+.n6, .n7{
+    width: 45%;
+    height: 50%;
+}
+
+.n4 > div{
+    background-color: pink;
+    display: flex;
+    align-items: center;
+    color: black;
+}
