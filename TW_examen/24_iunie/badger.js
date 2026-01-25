@@ -1,17 +1,37 @@
 
 const body = document.querySelector('body');
 
+
+function playSound(){
+
+    const sunet = new Audio("badger.mp3");
+
+    sunet.play();
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    let misca = false;
     let genuflexiuni = parseInt(localStorage.getItem('genu')) || 0;
     const infoPoint = document.getElementById('info');
 
     function updateGenu(){
         localStorage.setItem('genu', genuflexiuni);
         infoPoint.textContent = `Genuflexiuni facute: ${genuflexiuni}`;
+
     }
     updateGenu();
+
+    function ciupearca(){
+        const mush = document.createElement('img');
+        mush.src = "mush.png";
+
+        mush.style.position = "absolute";
+        mush.style.left = Math.random() * innerWidth + "px";
+        mush.style.top = Math.random() * innerHeight + "px";
+
+        body.appendChild(mush);
+    }
 
     function bursuc(){
         const bursuc = document.createElement('div');
@@ -24,29 +44,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
         bursuc.addEventListener('click', (event) => {
             event.stopPropagation();
-            if (event.target.animation == undefined){
+            if (bursuc.dataset.running === "true"){
+                clearInterval(bursuc.intervalRef);
+                clearTimeout(bursuc.timeoutRef);
+                body.removeChild(bursuc);
+            }
+            else{
+
+                bursuc.dataset.running = "true";
                 let contor_poza = 1;
-                event.target.animation = setInterval(() => {
+                let isWaiting = false;
+
+
+                bursuc.intervalRef = setInterval(() => {
+                    if (isWaiting) return;
+
                     if (contor_poza == 4){
-                        contor_poza = 1;
                         genuflexiuni++;
-                        console.log(genuflexiuni);
+                        
+                        if(genuflexiuni % 5 == 0){
+                            ciupearca();
+                        }
 
                         updateGenu();
 
-                        setTimeout(() => {
+                        isWaiting = true; // pauza
+                        bursuc.timeoutRef = setTimeout(() => {
                             console.log("s a facut timeout");
+                            contor_poza = 1;
+                            isWaiting = false; // sa inceapa din nou
+                            bursuc.innerHTML = `<img src = "bursuc${contor_poza}.png">`
                         }, 1000);
 
                     }
                     else{
                         contor_poza ++;
+                        bursuc.innerHTML = `<img src = "bursuc${contor_poza}.png">`
                     }
-                    bursuc.innerHTML = `<img src = "bursuc${contor_poza}.png">`
                 }, 200);
-            }
-            else{
-                clearInterval(event.target);
             }
 
         });
@@ -57,6 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (event) =>{
         if(event.key === "b"){
             bursuc();
+        }
+        else if (event.key === "p"){
+            playSound();
         }
     });
 });
