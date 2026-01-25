@@ -1,0 +1,74 @@
+
+.n1{grid-area: a;}
+.n2{grid-area: b;}
+.n3{grid-area: c;}
+.n4{grid-area: d;}
+.n5{grid-area: e;}
+
+.n4{
+    background-color: darkgoldenrod;
+}
+
+.n1, .n2, .n3, .n5{
+    background-color: gold;
+
+}
+
+.n2{
+    gap: 30px;
+}
+
+.circle{
+    background-color: antiquewhite;
+    border-radius: 50%;
+    height: 65px;
+    width: 65px;
+
+    display: flex;
+    align-items: center;
+}
+
+.container > div{
+    border: dashed 8px darkgoldenrod;
+    padding: 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: repeat(5, 55px);
+    grid-template-rows: repeat(4, 90px);
+
+    grid-template-areas: 
+    "a a a a a"
+    "b b b b b"
+    "b b b b b"
+    "c d d d e";
+
+    gap: 5px;
+    column-gap: 5px;
+}
+
+.circle:hover{
+    background-color: red;
+    color: red;
+
+    transform: scale(0.33);
+    transition: ease 0.45s;
+}
+
+@media (min-width: 333px) and (max-width: 622px){
+    .container{
+        display: flex;
+        flex-direction: column;
+    }
+    .container > div{
+        width: 100%;
+    }
+    .circle{
+        transform: scaleX(0.5);
+    }
+}
