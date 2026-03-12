@@ -1,0 +1,37 @@
+# dfa_config.yaml
+
+name: "EndsWith11"
+description: "A DFA that accepts binary strings ending in 11"
+
+# The Alphabet (\Sigma)
+alphabet: 
+  - "0"
+  - "1"
+
+# The Set of States (Q)
+states: 
+  - "q0"
+  - "q1"
+  - "q2"
+
+# The Start State (q0)
+start_state: "q0"
+
+# The Set of Accept/Final States (F)
+accept_states: 
+  - "q2"
+
+# The Transition Function (\delta)
+# Format: 
+#   current_state:
+#     input_symbol: next_state
+transitions:
+  q0:
+    "0": "q0"
+    "1": "q1"
+  q1:
+    "0": "q0"
+    "1": "q2"
+  q2:
+    "0": "q0"
+    "1": "q2"
