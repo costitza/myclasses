@@ -41,9 +41,11 @@ int front(Coada* head){
     return head -> info;
 }
 
+
 bool empty(Coada* head){
     return head == nullptr;
 }
+
 
 int main(){
     Coada* head = nullptr;
