@@ -67,6 +67,7 @@ private:
 public:
     Ebook(std::string t, double p, int mb, std::string f): ProdusDigital(t, p, mb), format(f){}
     Ebook(const Ebook& other){
+        
         this->titlu = other.titlu;
         this->pretBaza = other.pretBaza;
         this->dimensiuneMB = other.dimensiuneMB;
