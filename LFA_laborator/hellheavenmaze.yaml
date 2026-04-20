@@ -1,0 +1,53 @@
+name: "HeavenOrHellMaze"
+description: "An NFA that simulates navigating through a map of rooms, ending in heaven or hell."
+
+alphabet: 
+  - "N"
+  - "S"
+  - "E"
+  - "W"
+
+states: 
+  - "outside"
+  - "hall"
+  - "lab"
+  - "kitchen"
+  - "library"
+  - "garden"
+  - "heaven"
+  - "hell"
+
+start_state: "outside"
+
+accept_states: 
+  - "heaven"
+  - "hell"
+
+transitions:
+  outside:
+    "W": ["hall"]
+  hall:
+    "W": ["lab"]
+    "N": ["kitchen"]
+  lab:
+    "E": ["hall"]
+  kitchen:
+    "S": ["hall"]
+    "W": ["library"]
+  library:
+    "E": ["kitchen"]
+    "W": ["garden"]
+  garden:
+    "E": ["library"]
+    # This represents the 50/50 non-deterministic split
+    "S": ["heaven", "hell"] 
+  heaven:
+    "N": ["heaven"]
+    "S": ["heaven"]
+    "E": ["heaven"]
+    "W": ["heaven"]
+  hell:
+    "N": ["hell"]
+    "S": ["hell"]
+    "E": ["hell"]
+    "W": ["hell"]
