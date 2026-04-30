@@ -241,9 +241,9 @@ ex8_1 :- not((listaValBool([_a, _b, _c]),
 stg8_2(_a, _b, _c) :- implica(_a, _c), implica(_b, _c).
 
 % A U B ⊆ C
-dre8_2(_a, _b, _c) :- echiv((_a; _b), _c).
+dre8_2(_a, _b, _c) :- implica((_a; _b), _c).
 
-echivstgcudr8_2(_a, _b, _c) :- implica(stg8_2(_a, _b, _c), dre8_2(_a, _b, _c)).
+echivstgcudr8_2(_a, _b, _c) :- echiv(stg8_2(_a, _b, _c), dre8_2(_a, _b, _c)).
 
 % expresia care pare ca nu este adevarata
 suntechiv8_2stgcudr :- not((listaValBool([_a, _b, _c]), 
