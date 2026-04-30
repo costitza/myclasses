@@ -236,7 +236,7 @@ prop8_1(_a, _b, _c) :- implica(stg8_1(_a, _b), dre8_1(_a, _b, _c)).
 ex8_1 :- not((listaValBool([_a, _b, _c]), 
                       not(prop8_1(_a, _b, _c)))).
 
-%ex 8_2 (posibil expresie gresita)
+%ex 8_2
 % (A ⊆ C SI B ⊆ C)
 stg8_2(_a, _b, _c) :- implica(_a, _c), implica(_b, _c).
 
