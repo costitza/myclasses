@@ -1,9 +1,18 @@
-:- [lab4lmc1].
 
 
 % helpers
+xor(P,Q) :- P, not(Q) ; Q, not(P).
 dif(A, B) :- A, not(B).
 inclnuegal(A, B) :- implica(A, B), not(implica(B, A)).
+
+implica(P,Q) :- not(P), ! ; Q.
+echiv(P,Q) :- implica(P,Q), implica(Q,P).
+
+
+listaValBool(L) :- listaBool(L), write(L), nl.
+
+listaBool([]).
+listaBool([H|T]) :- member(H,[false,true]), listaBool(T).
 
 
 % ex 1
@@ -231,10 +240,10 @@ ex8_1 :- not((listaValBool([_a, _b, _c]),
 % (A ⊆ C SI B ⊆ C)
 stg8_2(_a, _b, _c) :- implica(_a, _c), implica(_b, _c).
 
-% A U B = C
+% A U B ⊆ C
 dre8_2(_a, _b, _c) :- echiv((_a; _b), _c).
 
-echivstgcudr8_2(_a, _b, _c) :- echiv(stg8_2(_a, _b, _c), dre8_2(_a, _b, _c)).
+echivstgcudr8_2(_a, _b, _c) :- implica(stg8_2(_a, _b, _c), dre8_2(_a, _b, _c)).
 
 % expresia care pare ca nu este adevarata
 suntechiv8_2stgcudr :- not((listaValBool([_a, _b, _c]), 
