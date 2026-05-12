@@ -22,6 +22,8 @@ imag(_,[]).
 
 inclusa(A,B) :- not((member(X,A), not(member(X,B)))).
 
+functionala(R) :- not((member((X,Y),R), member((X,Z),R), Y\=Z)).
+
 egaldemult(A,B) :- inclusa(A,B), inclusa(B,A).
 
 inclusain([],_).
@@ -66,6 +68,10 @@ relpreord(R,A) :- relbinpe(R,A), preord(R,A).
 afisLista([]).
 afisLista([H|T]) :- write(H), (T=[], ! ; write(',')), afisLista(T).
 
+asim(R) :- not((member((X,Y),R), member((Y,X),R))).
+
+relasim(R,A) :- relbinpe(R,A), asim(R).
+
 % exercitii rezolvate
 
 
@@ -97,5 +103,5 @@ relatiicomplete(A, LR) :- setof(R, relcompleta(R, A), LR).
 
 relatiipreord(A, LR) :- setof(R, relpreord(R, A), LR).
 
-relatiipreordcuafis(A, LR, Nr) :- relatiipreord(A, LR), length(LR, Nr), afislista(LR).
+relatiipreordcuafis(A, LR, Nr) :- relatiipreord(A, LR), length(LR, Nr), afisLista(LR).
 
