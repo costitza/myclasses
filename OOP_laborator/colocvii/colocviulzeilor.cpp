@@ -97,6 +97,9 @@ private:
     static int cont;
     int id;
     vector<shared_ptr<Produs>> produse;
+    int val;
+
+    int valEnerg() const;
 
 public:
     Comanda(vector<shared_ptr<Produs>> p) {
@@ -106,11 +109,24 @@ public:
         for(auto elem : p){
             produse.push_back(elem);
         }
+
+        val = valEnerg();
     }
 
+    void adaugaProdus(shared_ptr<Produs> p);
+
     int getID() const;
-    int valEnerg() const;
+
+    int getVal(){
+        return val;
+    }
 };
+
+void Comanda :: adaugaProdus(shared_ptr<Produs> p){
+    produse.push_back(p);
+
+    val = valEnerg();
+}
 
 int Comanda :: getID() const{
     return id;
@@ -242,6 +258,10 @@ public:
 
     void print() const;
     void afisareNrAng();
+
+    vector<shared_ptr<Produs>> adaugaProduse();
+    void adaugaComanda();
+    void simulare();
 };
 
 
@@ -283,3 +303,105 @@ void Menu :: afisareNrAng(){
 }
 
 
+vector<shared_ptr<Produs>> Menu :: adaugaProduse(){
+    vector<shared_ptr<Produs>> produse;
+
+    while(true){
+        cout << "Ce vrei sa adaugi la comanda: \n";
+        cout << "1. Bautura\n";
+        cout << "2. Desert\n";
+        cout << "3. Burger\n";
+
+        int tip;
+        cin >> tip;
+
+        shared_ptr<Produs> ob = nullptr;
+
+        if (tip == 1){
+            string nume;
+            cout << "Nume: ";
+            getline(cin >> ws, nume);
+
+            int gram;
+            cout << "Gramaj: ";
+            cin >> gram;
+
+            string sticla;
+            cout << "Este la sticla: ";
+            getline(cin >> ws, sticla);
+
+            ob = make_shared<Bautura>(nume, gram, sticla);
+        }
+        else if(tip == 2){
+            string nume;
+            cout << "Nume: ";
+            getline(cin >> ws, nume);
+
+            int gram;
+            cout << "Gramaj: ";
+            cin >> gram;
+
+            string format;
+            cout << "In ce format (felie, portie, cupa): ";
+            getline(cin >> ws, format);
+
+            ob = make_shared<Desert>(nume, gram, format);
+        }
+        else if(tip == 3){
+            string nume;
+            cout << "Nume: ";
+            getline(cin >> ws, nume);
+
+            int gram;
+            cout << "Gramaj: ";
+            cin >> gram;
+
+            string format;
+            cout << "Ce lista de ingrediente are: ";
+            getline(cin >> ws, format);
+
+            ob = make_shared<Burger>(nume, gram, format);
+        }
+        else{
+            return;
+        }
+
+        produse.push_back(ob);
+    }
+
+    return produse;
+}
+
+
+void Menu :: adaugaComanda(){
+
+    vector<shared_ptr<Produs>> produse = adaugaProduse();
+
+    shared_ptr<Comanda> com = make_shared<Comanda>(produse);
+
+    comenzi.push_back(com);
+}
+
+
+void Menu :: simulare(){
+
+    int comenziNoi = 0;
+
+    while(true){
+        cout << "Adauga comanda (1/0): ";
+        int tip;
+        cin >> tip;
+        
+        if(tip == 1){
+            adaugaComanda();
+            comenziNoi ++;
+        }
+        else{
+            break;
+        }
+    }
+
+
+    for (int i = 0;i < angajati.size(); i++){
+    }
+}
