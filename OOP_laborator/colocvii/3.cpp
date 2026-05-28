@@ -342,11 +342,16 @@ void Menu :: stergeContracte(){
     cout << "Introdu cif: ";
     getline(cin >> ws, cif);
 
-    for (int i = 0;i < contracte.size(); i++){
-        if (cif == contracte[i] -> getCif()){
-            contracte.erase(contracte.begin() + i);
-        }
-    }
+    contracte.erase(remove_if(contracte.begin(), contracte.end(), [cif](const shared_ptr<Contract>& ob){
+        return ob -> getCif() == cif;}),
+        contracte.end() 
+    );
+
+    // for (int i = 0;i < contracte.size(); i++){
+    //     if (cif == contracte[i] -> getCif()){
+    //         contracte.erase(contracte.begin() + i);
+    //     }
+    // }
 }
 
 
