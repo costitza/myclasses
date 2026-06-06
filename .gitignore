@@ -2,6 +2,8 @@
 cs50env/
 venv/
 .venv/
+
+.vscode/
 env/
 
 # Python cache
