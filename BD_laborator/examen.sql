@@ -108,3 +108,34 @@ GROUP BY d.ID_DEPARTAMENT, d.DENUMIRE_DEPT
 ORDER BY suma_maxima DESC
 FETCH FIRST 1 ROWS WITH TIES;
 
+
+-- 8
+SELECT
+    c.nume_companie,
+    SUM(ct.valoare_totala) as suma
+FROM CLIENTI c
+JOIN CONTRACTE ct ON ct.id_client = c.id_client
+GROUP BY c.nume_companie
+HAVING SUM(ct.valoare_totala) >= 5000;
+
+-- 9
+SELECT 
+    a.NUME || ' ' || a.PRENUME as nume_complet,
+    a.DATA_ANGAJARII
+FROM ANGAJATI a
+WHERE NOT EXISTS(
+    SELECT 1
+    FROM CONTRACTE c
+    WHERE c.id_angajat = a.id_angajat
+);
+
+-- 10
+SELECT 
+    d.DENUMIRE_DEPT,
+    MAX(a.SALARIU) as salariu_maxim
+FROM DEPARTAMENTE d
+JOIN ANGAJATI a ON a.ID_DEPARTAMENT = d.ID_DEPARTAMENT
+GROUP BY d.DENUMIRE_DEPT, d.ID_DEPARTAMENT;
+
+
+
