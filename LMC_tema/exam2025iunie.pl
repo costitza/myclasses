@@ -54,18 +54,18 @@ detF(FctF) :- algBooleA(MultElemA, OrdA), izomorfismeposeturi(MultElemA, OrdA, M
 
 verifAsatepsilon :- algBooleA(MultElemA, OrdA),
                     detR(RelR),
-                    detF(RelF),
+                    detF(FctF),
                     not((
-                        member(X, MultElemA),
+                        member(Y, MultElemA),
                         not((
-                            member(Y, MultElemA),
+                            member(X, MultElemA),
                             
-                            member([X, FX], FctF),
-                            member([Y, FY], FctF),
-                            member([FY, FFY], FctF),
+                            member((X, FX), FctF),
+                            member((Y, FY), FctF),
+                            member((FY, FFY), FctF),
 
                             FX = FFY,
-                            member([X, Y], RelR)
+                            member((X, Y), RelR)
                         ))
                     )).
 
