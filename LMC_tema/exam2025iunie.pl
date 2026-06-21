@@ -52,22 +52,24 @@ detF(FctF) :- algBooleA(MultElemA, OrdA), izomorfismeposeturi(MultElemA, OrdA, M
                 not(FctF = [(a, a), (b, b), (c, c), (d, d)]).
 
 
-verifAsatepsilon :- algBooleA(MultElemA, OrdA),
-                    detR(RelR),
-                    detF(FctF),
-                    not((
-                        member(Y, MultElemA),
-                        not((
-                            member(X, MultElemA),
-                            
-                            member((X, FX), FctF),
-                            member((Y, FY), FctF),
-                            member((FY, FFY), FctF),
+verifAsatepsilon :- 
+    algBooleA(MultElemA, _),
+    detR(RelR),
+    detF(FctF),
 
-                            FX = FFY,
-                            member((X, Y), RelR)
-                        ))
-                    )).
+    % 1. EXISTĂ X (Prolog va încerca x=a, x=b, x=c, x=d prin backtracking)
+    member(X, MultElemA), 
+
+    % 2. PENTRU ORICE Y (Nu există niciun Y care să încalce regula)
+    not((
+        member(Y, MultElemA),
+        member([X, FX], FctF),
+        member([Y, FY], FctF),
+        member([FY, FFY], FctF),
+
+        FX = FFY,
+        member([X, Y], RelR)  % Verificăm dacă X < Y
+    )).
 
 
 
