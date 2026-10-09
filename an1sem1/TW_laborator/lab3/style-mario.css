@@ -1,0 +1,19 @@
+@import url('https://fonts.cdnfonts.com/css/new-super-mario-font-u');
+
+body{
+    text-align: center;
+    background-color:cadetblue;
+    font-family: 'New Super Mario Font U', sans-serif;
+    font-size: medium;
+    align-items: center;
+}
+
+body > h1, h2, h3, h4, h5, h6{
+    font-size:large;
+}
+
+
+table{
+    padding: 10px;
+    margin-left: 35%;
+}
