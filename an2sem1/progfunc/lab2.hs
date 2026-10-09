@@ -31,7 +31,7 @@ maxim4 x y z w =
 		then u
 	else w
  
-test4 :: Integer -> Integer -> Integer -> Integer -> Integer
+test4 :: Integer -> Integer -> Integer -> Integer -> Bool
 test4 a b c d = let m = maxim4 a b c d
 	in (m >= a) && (m >= b) && (m >= c) && (m >= d)
  
