@@ -20,3 +20,6 @@ Thumbs.db
 LFA_laborator/*.txt
 LFA_laborator/*.json
 
+bin/
+obj/
+
