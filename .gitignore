@@ -24,5 +24,7 @@ bin/
 obj/
 
 *.exe
-
+*.out
+*.app
+*.bin
 
