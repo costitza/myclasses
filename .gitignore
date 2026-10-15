@@ -23,3 +23,6 @@ LFA_laborator/*.json
 bin/
 obj/
 
+*.exe
+
+
