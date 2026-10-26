@@ -1,0 +1,3 @@
+unbuffered write to stdout
+inainte de fork
+pid = 40329, global = 7, local = 11
