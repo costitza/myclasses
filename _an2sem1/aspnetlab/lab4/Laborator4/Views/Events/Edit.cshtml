@@ -1,0 +1,26 @@
+<h2>Editare Eveniment</h2>
+<hr />
+
+<form method="post" action="/Events/Edit">
+    <!-- Trimitem Id-ul ca input ascuns (hidden) pentru a ști ce obiect edităm -->
+    <input type="hidden" name="Id" value="@ViewBag.Event.Id" />
+
+    <div>
+        <label>Titlu:</label><br />
+        <input type="text" name="Title" value="@ViewBag.Event.Title" />
+    </div>
+    <br />
+    <div>
+        <label>Descriere:</label><br />
+        <textarea name="Description">@ViewBag.Event.Description</textarea>
+    </div>
+    <br />
+    <div>
+        <label>Locație:</label><br />
+        <input type="text" name="Location" value="@ViewBag.Event.Location" />
+    </div>
+    <br />
+    <button type="submit">Salvează modificările</button>
+</form>
+<br />
+<a href="/Events/Index">Renunță</a>

@@ -36,6 +36,30 @@ public class EventsController : Controller
         return events;
     }
 
+
+    [NonAction]
+    public Event? search(int? id)
+    {
+
+        if (id is null)
+        {
+            return null;
+        }
+
+        Event[] events = getEvents();
+
+        foreach (Event item in events)
+        {
+            if (item.Id == id)
+            {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
+
     [HttpGet]
     public IActionResult Index()
     {
@@ -87,9 +111,52 @@ public class EventsController : Controller
         return View();
     }
 
+    [HttpPost]
     public IActionResult New(Event ev)
     {
         return View("NewPostMethod");
+    }
+
+
+    [HttpGet]
+    public IActionResult Edit(int? id)
+    {
+        if (id == null)
+        {
+            ViewBag.ErrorMessage = "nu ai specificat id";
+            return View();
+        }
+
+        if(search(id) == null)
+        {
+            Response.StatusCode = StatusCodes.Status404NotFound;
+            ViewBag.ErrorMessage = "Nu există niciun eveniment cu id-ul " + id + ".";
+            return View("Error");
+        }
+        
+        Event ev = search(id);
+
+        ViewBag.Event = ev;
+
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Event ev)
+    {
+        // logica de editare
+
+        return View("EditMethod");
+    }
+
+
+    [HttpPost]
+    public IActionResult Delete(int id)
+    {
+
+        // logica de stergere 
+
+        return RedirectToAction("Index");
     }
 
 }
