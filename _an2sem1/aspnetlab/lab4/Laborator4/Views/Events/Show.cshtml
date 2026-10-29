@@ -1,0 +1,21 @@
+@{
+    ViewBag.PageName = "Show";
+}
+<h2>@ViewBag.PageName</h2>
+<hr />
+
+<h1>@ViewBag.Event.Title</h1>
+<p>@ViewBag.Event.Description</p>
+<p>Locația: @ViewBag.Event.Location</p>
+<small>Data: @ViewBag.Event.Date</small>
+<hr />
+
+<!-- Formularul de Delete (POST) cerut la Exercițiul 9 -->
+<form method="post" action="/Events/Delete/@ViewBag.Event.Id" style="display:inline;">
+    <button type="submit" onclick="return confirm('Sigur doriți să ștergeți acest eveniment?');">
+        Șterge Eveniment
+    </button>
+</form>
+
+<br /><br />
+<a href="/Events/Index">Afișare evenimente</a>

@@ -1,0 +1,30 @@
+@{
+    ViewBag.Title = "Lista Evenimentelor";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<!-- Iterarea prin lista de evenimente trimisă din Controller -->
+@if (ViewBag.Events != null)
+{
+    <div>
+        @foreach (var ev in ViewBag.Events)
+        {
+            <div style="border: 1px solid #ccc; padding: 12px; margin-bottom: 12px; border-radius: 6px;">
+                <h3>@ev.Title</h3>
+                <p><strong>Descriere:</strong> @ev.Description</p>
+                <p><strong>Locație:</strong> @ev.Location</p>
+                <p><small><strong>Data:</strong> @ev.Date.ToString("dd.MM.yyyy HH:mm")</small></p>
+
+                <!-- Link-urile pentru afișarea detaliată și editare -->
+                <a href="/Events/Show/@ev.Id">Afișare detalii</a> | 
+                <a href="/Events/Edit/@ev.Id">Editare</a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Nu există evenimente de afișat.</p>
+}
