@@ -30,3 +30,6 @@ obj/
 
 
 .idea/
+
+
+*/aspnetlab/**/appsettings*.json
