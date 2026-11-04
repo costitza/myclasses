@@ -1,0 +1,37 @@
+## Build output and intermediate files
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+[Tt]emp/
+publish/
+
+## NuGet packages
+*.nupkg
+packages/
+*.nuget.props
+*.nuget.targets
+
+## IDE & editor local state
+.vs/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.suo
+*.user
+*.userprefs
+*.dbmdl
+
+## OS-generated files
+.DS_Store
+Thumbs.db
+
+## Secrets and appsettings in this folder and subdirectories
+**/appsettings*.json
+!**/appsettings*.example.json
+!**/appsettings*.Example.json
+*.pfx
+*.p12
+*.key
+.env
