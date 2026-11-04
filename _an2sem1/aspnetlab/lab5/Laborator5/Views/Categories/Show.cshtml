@@ -1,0 +1,9 @@
+<h2>Detalii Categorie</h2>
+<hr />
+<h3>@ViewBag.Category.CategoryName</h3>
+
+<form method="post" action="/Categories/Delete/@ViewBag.Category.Id" style="display:inline;">
+    <button type="submit" class="btn btn-danger" onclick="return confirm('Sigur ștergi categoria?');">Șterge</button>
+</form>
+| <a href="/Categories/Edit/@ViewBag.Category.Id">Editează</a>
+| <a href="/Categories/Index">Înapoi la listă</a>

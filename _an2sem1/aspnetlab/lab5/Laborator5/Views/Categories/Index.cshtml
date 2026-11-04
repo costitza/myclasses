@@ -1,0 +1,12 @@
+<h2>Lista Categoriilor</h2>
+<p><a href="/Categories/New" class="btn btn-primary">Adaugă categorie nouă</a></p>
+<hr />
+
+@foreach (var cat in ViewBag.Categories)
+{
+    <div class="mb-3">
+        <h4>@cat.CategoryName</h4>
+        <a href="/Categories/Show/@cat.Id">Afișare</a> |
+        <a href="/Categories/Edit/@cat.Id">Editare</a>
+    </div>
+}

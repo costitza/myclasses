@@ -1,0 +1,33 @@
+@{
+    ViewBag.Title = "Editare Eveniment";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<form method="post" action="/Events/Edit/@ViewBag.Event.Id">
+    <div class="form-group mb-3">
+        <label>Titlu:</label>
+        <input type="text" name="Title" class="form-control" value="@ViewBag.Event.Title" required />
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Descriere:</label>
+        <textarea name="Description" class="form-control">@ViewBag.Event.Description</textarea>
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Locație:</label>
+        <input type="text" name="Location" class="form-control" value="@ViewBag.Event.Location" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Data:</label>
+        <!-- Formatul cerut pentru datetime-local -->
+        <input type="datetime-local" name="Date" class="form-control" 
+               value="@ViewBag.Event.Date.ToString("yyyy-MM-ddTHH:mm")" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvează modificările</button>
+    <a href="/Events/Index" class="btn btn-secondary">Renunță</a>
+</form>

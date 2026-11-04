@@ -1,0 +1,10 @@
+<h2>Editare Categorie</h2>
+<hr />
+<form method="post" action="/Categories/Edit/@ViewBag.Category.Id">
+    <div class="form-group mb-3">
+        <label>Nume Categorie:</label>
+        <input type="text" name="CategoryName" class="form-control" value="@ViewBag.Category.CategoryName" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Salvează modificările</button>
+    <a href="/Categories/Index" class="btn btn-secondary">Renunță</a>
+</form>
