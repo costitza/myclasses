@@ -1,0 +1,37 @@
+@* EXERCIȚIUL 7 – de analizat: categoria vine ca Model (return View(category)) *@
+@model EventHub.Models.Category
+
+@{
+    ViewBag.Title = "Afișare categorie";
+}
+
+<div class="d-flex justify-content-center">
+    <a class="btn btn-outline-success" asp-controller="Categories" asp-action="Index">Afișare categorii</a>
+</div>
+
+<br />
+
+<div class="card">
+
+    <div class="card-body">
+
+        <h3 class="card-title alert-success py-3 px-3 rounded-2"><i class="bi bi-tag"></i> @Model.CategoryName</h3>
+
+    </div>
+
+    <hr />
+
+    <div class="d-flex flex-row justify-content-between p-3">
+
+        <a class="btn btn-success" asp-controller="Categories" asp-action="Edit" asp-route-id="@Model.Id">Editează categoria</a>
+
+        @* La ștergerea categoriei se șterg și evenimentele din categoria respectivă *@
+        <form method="post" asp-controller="Categories" asp-action="Delete" asp-route-id="@Model.Id">
+
+            <button class="btn btn-danger" type="submit">Șterge categoria</button>
+
+        </form>
+
+    </div>
+
+</div>

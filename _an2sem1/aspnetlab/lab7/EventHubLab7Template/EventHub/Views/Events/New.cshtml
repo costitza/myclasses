@@ -1,0 +1,99 @@
+@* EXERCIȚIUL 4d
+   Modelul este un obiect Event gol, cu lista categoriilor în proprietatea Categ (acțiunea New cu GET) *@
+@model EventHub.Models.Event
+
+@{
+    ViewBag.Title = "Adăugare eveniment";
+}
+
+<h2 class="text-center mt-5">Adăugare eveniment</h2>
+
+<br />
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-6 offset-3">
+
+            @* asp-controller + asp-action generează action="/Events/New" (VEZI Curs 7 – Helpere pentru View) *@
+            <form method="post" asp-action="New" asp-controller="Events">
+
+                <div class="form-group">
+                    @* asp-for leagă eticheta și câmpul de proprietatea Title din Model:
+                       se generează for="Title", id="Title", name="Title" *@
+                    <label asp-for="Title" class="form-label">Titlul evenimentului</label>
+                    <br />
+                    <input asp-for="Title" class="form-control" />
+                    <br /><br />
+                </div>
+
+                <div class="form-group">
+                    @* TODO (exercițiul 4d): aici se adaugă eticheta și câmpul pentru descrierea evenimentului
+                       (label + textarea, cu asp-for="Description") *@
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Date" class="form-label">Data și ora</label>
+                    <br />
+                    @* pentru o proprietate DateTime, asp-for generează type="datetime-local"
+                       value="" – câmpul pornește gol (altfel s-ar afișa data implicită 01.01.0001) *@
+                    <input asp-for="Date" class="form-control" value="" />
+                    <br /><br />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Location" class="form-label">Locația</label>
+                    <br />
+                    <input asp-for="Location" class="form-control" />
+                    <br /><br />
+                </div>
+
+                <div class="form-group">
+                    @* TODO (exercițiul 4d): aici se adaugă dropdown-ul pentru categorie
+                       (select cu asp-for="CategoryId" și asp-items="Model.Categ") *@
+                </div>
+
+                <button class="btn btn-success" type="submit">Adaugă evenimentul</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@* FORMULARUL FOLOSIND HTML HELPERS
+   Acesta este adăugat doar ca exemplu, pentru a ilustra ambele metode de implementare
+   (VEZI Curs 7 – Exemple pentru implementarea alternativă a Helperelor)
+
+<form method="post" action="/Events/New">
+
+    @Html.Label("Title", "Titlul evenimentului")
+    <br />
+    @Html.TextBox("Title", null, new { @class = "form-control" })
+    <br /><br />
+
+    @Html.Label("Description", "Descrierea evenimentului")
+    <br />
+    @Html.TextArea("Description", null, new { @class = "form-control" })
+    <br /><br />
+
+    @Html.Label("Date", "Data și ora")
+    <br />
+    @Html.TextBox("Date", "", new { @class = "form-control", type = "datetime-local" })
+    <br /><br />
+
+    @Html.Label("Location", "Locația")
+    <br />
+    @Html.TextBox("Location", null, new { @class = "form-control" })
+    <br /><br />
+
+    <label>Selectați categoria</label>
+    @Html.DropDownListFor(m => m.CategoryId,
+            new SelectList(Model.Categ, "Value", "Text"),
+            "Selectați categoria", new { @class = "form-select" })
+
+    <br />
+
+    <button class="btn btn-success" type="submit">Adaugă evenimentul</button>
+
+</form>
+*@

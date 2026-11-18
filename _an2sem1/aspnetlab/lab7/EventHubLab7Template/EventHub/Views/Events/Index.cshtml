@@ -1,0 +1,60 @@
+@* EXERCIȚIUL 2 – de analizat
+   Lista vine din Controller prin ViewBag.Events (VEZI Curs 7 – ViewBag)
+   Link-urile sunt scrise cu Tag Helpers: asp-controller, asp-action, asp-route-id
+   (VEZI Curs 7 – Helpere pentru View) *@
+@{
+    ViewBag.Title = "Evenimente";
+}
+
+<h2 class="text-center">Afișare evenimente</h2>
+<br />
+
+@* mesajul trimis prin TempData de acțiunile New, Edit și Delete
+   (citit în acțiunea Index și pus în ViewBag.Message) *@
+@if (ViewBag.Message != null)
+{
+    <h2 class="alert alert-success p-3 rounded-3 text-center mb-5">@ViewBag.Message</h2>
+}
+
+<div class="d-flex justify-content-center gap-2">
+
+    <a class="btn btn-outline-success" asp-controller="Categories" asp-action="Index">Afișare categorii</a>
+
+    <a class="btn btn-outline-success" asp-controller="Events" asp-action="New">Adaugă eveniment</a>
+
+</div>
+
+<br />
+
+@foreach (var ev in ViewBag.Events)
+{
+    <div class="card">
+
+        <div class="card-body">
+
+            <h3 class="card-title alert-success py-3 px-3 rounded-2">@ev.Title</h3>
+
+            <div class="card-text">@ev.Description</div>
+
+            <div class="d-flex justify-content-between flex-row mt-5">
+
+                @* bi bi-globe, bi bi-geo-alt – iconițe Bootstrap Icons, incluse în _Layout.cshtml *@
+                @* ev.Category este completată datorită Include(e => e.Category) din Controller *@
+                <div><i class="bi bi-globe"></i> @ev.Category.CategoryName</div>
+
+                <div><i class="bi bi-geo-alt"></i> @ev.Location</div>
+
+                @* asp-route-id adaugă id-ul în adresă: /Events/Show/2 *@
+                <a class="btn btn-success" asp-controller="Events" asp-action="Show" asp-route-id="@ev.Id">Afișare eveniment</a>
+
+                <span class="alert-success px-1 align-content-center">@ev.Date</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <br />
+    <br />
+}

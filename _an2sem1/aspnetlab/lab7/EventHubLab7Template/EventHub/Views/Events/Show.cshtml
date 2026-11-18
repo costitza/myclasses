@@ -1,0 +1,158 @@
+@* TODO (exercițiul 3b): se include Modelul (directiva @model) *@
+@model EventHub.Models.Event
+
+@* Afișarea unui eveniment, împreună cu categoria din care face parte
+   Datele vin din Controller ca Model (return View(ev)) – VEZI Curs 7 – Model *@
+@{
+    ViewBag.Title = "Afișare eveniment";
+}
+
+<div class="d-flex justify-content-center gap-2">
+
+    <a class="btn btn-outline-success" asp-controller="Events" asp-action="Index">Afișare evenimente</a>
+
+    <a class="btn btn-outline-success" asp-controller="Events" asp-action="New">Adaugă eveniment</a>
+
+</div>
+
+<br />
+
+<div class="card">
+
+    <div class="card-body">
+
+        <h3 class="card-title alert-success py-3 px-3 rounded-2">@Model.Title</h3>
+
+        @* TODO (exercițiul 3b): se afișează descrierea evenimentului *@
+        <div class="card-text">@Model.Description</div>
+
+        <div class="d-flex justify-content-between flex-row mt-5">
+
+            @* TODO (exercițiul 3b): se afișează numele categoriei (Model.Category a fost adusă cu Include) *@
+            <div><i class="bi bi-globe"></i> @Model.Category.CategoryName </div>
+
+            <div><i class="bi bi-geo-alt"></i> @Model.Location</div>
+
+            <span class="alert-success">@Model.Date</span>
+
+        </div>
+
+    </div>
+
+    <hr />
+
+    <div class="d-flex flex-row justify-content-between">
+
+        @* link (GET) către formularul de editare: /Events/Edit/{id} *@
+        <a asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Editează evenimentul</a>
+
+        @* ștergerea modifică datele, deci se face printr-un formular POST, nu printr-un link (EXERCIȚIUL 6) *@
+        <form method="post" asp-controller="Events" asp-action="Delete" asp-route-id="@Model.Id">
+
+            <button class="btn btn-danger" type="submit">Șterge evenimentul</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<br />
+<br />
+
+@* EXERCIȚIUL 3c – de analizat
+   Afișarea recenziilor, împreună cu butoanele de editare și ștergere
+   Model.Reviews este completată datorită Include(e => e.Reviews) din acțiunea Show *@
+
+@foreach (var rev in Model.Reviews)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+
+                <div>
+
+                    <p>@rev.Content</p>
+                    <small>@rev.Date</small>
+
+                </div>
+                <br>
+
+                <div class="d-flex gap-2">
+
+                    <div>
+
+                        @* link (GET) către formularul de editare a recenziei: /Reviews/Edit/{id} *@
+                        <a class="btn btn-outline-primary" asp-controller="Reviews" asp-action="Edit" asp-route-id="@rev.Id"><i class="bi bi-pencil-square"></i> Editează</a>
+
+                    </div>
+
+                    <div>
+
+                        @* ștergerea recenziei: formular POST către ReviewsController, acțiunea Delete *@
+                        <form method="post" asp-controller="Reviews" asp-action="Delete" asp-route-id="@rev.Id">
+
+                            <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i> Șterge</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <br />
+
+            </div>
+
+            <div class="col-md-2"></div>
+
+        </div>
+
+    </div>
+}
+
+
+@* Afișarea formularului în care se poate adăuga o recenzie
+   Formularul trimite POST către ReviewsController, acțiunea New *@
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+
+                <form method="post" asp-controller="Reviews" asp-action="New">
+
+                    <div class="card-body">
+
+                        @* câmp ascuns: id-ul evenimentului se trimite odată cu recenzia
+                           și ajunge, prin model binding, în rev.EventId (cheia externă) *@
+                        <input type="hidden" name="EventId" value="@Model.Id" />
+
+                        <label>Conținutul recenziei</label>
+                        <br />
+
+                        <textarea class="form-control" name="Content"></textarea>
+                        <br />
+
+                        <button class="btn btn-success" type="submit">Adaugă recenzia</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
+
+</div>

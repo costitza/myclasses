@@ -1,0 +1,104 @@
+@* TODO (exercițiul 5b): 1) se include Modelul (directiva @model) pe prima linie;
+   2) se elimină comentariul Razor din jurul formularului (simbolul de început de sub acest comentariu
+      și simbolul de sfârșit de după ultimul </div>);
+   3) se analizează implementarea (VEZI explicațiile din Laboratorul 7, exercițiul 5b) *@
+
+@model EventHub.Models.Event
+
+@{
+    ViewBag.Title = "Editare eveniment";
+}
+
+<h2 class="text-center mt-5">Editare eveniment</h2>
+
+<br />
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+
+            <form method="post" asp-action="Edit" asp-controller="Events" asp-route-id="@Model.Id">
+
+                <div class="form-group">
+                    <label asp-for="Title" class="form-label">Titlul evenimentului</label>
+                    <br />
+                    <input asp-for="Title" class="form-control" />
+                    <br /><br />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="form-label">Descrierea evenimentului</label>
+                    <br />
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <br /><br />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Date" class="form-label">Data și ora</label>
+                    <br />
+                    <input asp-for="Date" class="form-control" />
+                    <br /><br />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Location" class="form-label">Locația</label>
+                    <br />
+                    <input asp-for="Location" class="form-control" />
+                    <br /><br />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CategoryId" class="form-label">Selectați categoria</label>
+                    <br />
+                    <select asp-for="CategoryId" asp-items="Model.Categ" class="form-select">
+                        <option value="">Selectați categoria</option>
+                    </select>
+                    <br />
+                </div>
+
+                <button class="btn btn-sm btn-success" type="submit">Modifică evenimentul</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+@* FORMULARUL FOLOSIND HTML HELPERS
+   Acesta este adăugat doar ca exemplu, pentru a ilustra ambele metode de implementare
+   (VEZI Curs 7 – Exemple pentru implementarea alternativă a Helperelor)
+
+<form method="post" action="/Events/Edit/@Model.Id">
+
+    @Html.Label("Title", "Titlul evenimentului")
+    <br />
+    @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+    <br /><br />
+
+    @Html.Label("Description", "Descrierea evenimentului")
+    <br />
+    @Html.Editor("Description", new { htmlAttributes = new { @class = "form-control" } })
+    <br /><br />
+
+    @Html.Label("Date", "Data și ora")
+    <br />
+    @Html.Editor("Date", new { htmlAttributes = new { @class = "form-control" } })
+    <br /><br />
+
+    @Html.Label("Location", "Locația")
+    <br />
+    @Html.Editor("Location", new { htmlAttributes = new { @class = "form-control" } })
+    <br /><br />
+
+    <label>Selectați categoria</label>
+    @Html.DropDownListFor(m => m.CategoryId,
+    new SelectList(Model.Categ, "Value", "Text"),
+    "Selectați categoria", new { @class = "form-select" })
+    <br />
+
+    <button class="btn btn-sm btn-success" type="submit">Modifică evenimentul</button>
+
+</form>
+*@

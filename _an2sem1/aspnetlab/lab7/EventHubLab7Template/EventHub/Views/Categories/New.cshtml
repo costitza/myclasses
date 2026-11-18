@@ -1,0 +1,31 @@
+@* EXERCIȚIUL 7 – de analizat: formular cu Tag Helpers, legat de Modelul Category *@
+@model EventHub.Models.Category
+
+@{
+    ViewBag.Title = "Adăugare categorie";
+}
+
+<h2 class="text-center mt-5">Adăugare categorie</h2>
+
+<br />
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-6 offset-3">
+
+            <form method="post" asp-controller="Categories" asp-action="New">
+
+                <div class="form-group">
+                    <label asp-for="CategoryName" class="form-label">Numele categoriei</label>
+                    <br />
+                    <input asp-for="CategoryName" class="form-control" />
+                    <br /><br />
+                </div>
+
+                <button class="btn btn-success" type="submit">Adaugă categoria</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
