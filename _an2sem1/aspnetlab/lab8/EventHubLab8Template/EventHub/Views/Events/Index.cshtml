@@ -1,0 +1,35 @@
+@{
+    ViewBag.Title = "Evenimente";
+}
+
+<h2 class="text-center">Afișare evenimente</h2>
+<br />
+
+@if (ViewBag.Message != null)
+{
+    <h2 class="alert alert-success p-3 rounded-3 text-center mb-5">@ViewBag.Message</h2>
+}
+
+<div class="d-flex justify-content-center gap-2">
+
+    <a class="btn btn-outline-success" asp-controller="Categories" asp-action="Index">Afișare categorii</a>
+
+    <a class="btn btn-outline-success" asp-controller="Events" asp-action="New">Adaugă eveniment</a>
+
+</div>
+
+<br />
+
+@foreach (var ev in ViewBag.Events)
+{
+    <div class="card">
+
+        <partial name = "EventInfo" model = "ev" />
+
+        <a class="btn btn-success" asp-controller="Events" asp-action="Show" asp-route-id="@ev.Id">Afișare eveniment</a>
+
+    </div>
+
+    <br />
+    <br />
+}

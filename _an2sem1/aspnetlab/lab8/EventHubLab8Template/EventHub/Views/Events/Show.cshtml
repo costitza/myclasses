@@ -1,0 +1,125 @@
+@model EventHub.Models.Event
+
+@{
+    ViewBag.Title = "Afișare eveniment";
+}
+
+<div class="d-flex justify-content-center gap-2">
+
+    <a class="btn btn-outline-success" asp-controller="Events" asp-action="Index">Afișare evenimente</a>
+
+    <a class="btn btn-outline-success" asp-controller="Events" asp-action="New">Adaugă eveniment</a>
+
+</div>
+
+<br />
+
+<div class="card">
+
+    <partial name = "EventInfo" model = "Model" />
+
+    <hr />
+
+    <div class="d-flex flex-row justify-content-between p-3">
+
+        <a class="btn btn-success" asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Id">Editează evenimentul</a>
+
+        <form method="post" asp-controller="Events" asp-action="Delete" asp-route-id="@Model.Id">
+
+            <button class="btn btn-danger" type="submit">Șterge evenimentul</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<br />
+<br />
+
+@foreach (var rev in Model.Reviews)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+
+                <div>
+
+                    <p>@rev.Content</p>
+                    <small>@rev.Date</small>
+
+                </div>
+                <br>
+
+                <div class="d-flex gap-2">
+
+                    <div>
+
+                        <a class="btn btn-outline-primary" asp-controller="Reviews" asp-action="Edit" asp-route-id="@rev.Id"><i class="bi bi-pencil-square"></i> Editează</a>
+
+                    </div>
+
+                    <div>
+
+                        <form method="post" asp-controller="Reviews" asp-action="Delete" asp-route-id="@rev.Id">
+
+                            <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i> Șterge</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <br />
+
+            </div>
+
+            <div class="col-md-2"></div>
+
+        </div>
+
+    </div>
+}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+
+                <form method="post" asp-controller="Events" asp-action="Show">
+
+                    <div class="card-body">
+
+                        <input type="hidden" name="EventId" value="@Model.Id" />
+
+                        <label>Conținutul recenziei</label>
+                        <br />
+
+                        <textarea class="form-control" name="Content"></textarea>
+
+                        @Html.ValidationMessage("Content", null, new { @class = "text-danger" })
+                        <br /><br />
+
+                        <button class="btn btn-success" type="submit">Adaugă recenzia</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
+
+</div>
